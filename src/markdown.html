@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>STATS PMML DISPLAY Extension Command</title>
+
+<link rel="stylesheet" type="text/css" href="extsyntax.css" />
+
+
+
+
+
+</head>
+
+<body>
+<h1>STATS PMML DISPLAY Extension Command</h1>
+
+<p>Display summary model information in PMML files.</p>
+<div class="syntax">
+<p>STATS PMML DISPLAY<br/>
+FILES=&ldquo;<em>file-expression</em>&rdquo;<sup>&#42;</sup></p>
+
+<p>/HELP</p>
+
+<p><sup>&#42;</sup> Required<br/>
+<sup>&#42;&#42;</sup> Default</p>
+</div>
+<p>STATS PMML DISPLAY /HELP displays this help and does nothing else.</p>
+
+
+<pre class="example"><code>STATS PMML DISPLAY FILES=&quot;c:/mymodels/regression.xml&quot;.
+
+STATS PMML DISPLAY FILES=&quot;c:/mymodels/*.xml&quot;.
+</code></pre>
+
+<p><strong>file-expression</strong> can be the name of an (xml) PMML file or a wildcard expression.
+Statistics file handles are supported.</p>
+
+<p>If a selected file is not a PMML file or from DISCRIMINANT, it is skipped
+with a message.</p>
+
+<p>This command requires at least Statistics version 20.</p>
+
+</body>
+
+</html>
+
