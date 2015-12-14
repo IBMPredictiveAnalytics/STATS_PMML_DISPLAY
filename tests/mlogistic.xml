@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PMML 
+	 version="4.0"
+	 xmlns="http://www.dmg.org/PMML-4_0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header 
+		 copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		<Application  name="IBM SPSS Statistics"  version="21.0.0.0" />
+	</Header>
+	<DataDictionary 
+		 numberOfFields="4">
+		<DataField 
+			 name="manager"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="6" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+			<Value  value="0"  displayValue=".00"  property="valid" />
+			<Value  value="1"  displayValue="1.00"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="jobcat"
+			 displayName="Employment Category"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="1" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="1"  displayValue="Clerical"  property="valid" />
+			<Value  value="2"  displayValue="Custodial"  property="valid" />
+			<Value  value="3"  displayValue="Manager"  property="valid" />
+			<Value  value="0"  displayValue="0 (Missing)"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="prevexp"
+			 displayName="Previous Experience (months)"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="6" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="jobtime"
+			 displayName="Months since Hire"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="2" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel 
+		 targetVariableName="manager"
+		 modelType="multinomialLogistic"
+		 algorithmName="multinomialLogistic"
+		 functionName="classification">
+		<Extension  extender="spss.com"  name="numberParameters"  value="6" />
+		<MiningSchema >
+			<MiningField  name="manager"  usageType="predicted"  missingValueTreatment="asIs" />
+			<MiningField  name="jobcat"  usageType="active"  missingValueTreatment="asIs" />
+			<MiningField  name="prevexp"  usageType="active"  missingValueTreatment="asIs" />
+			<MiningField  name="jobtime"  usageType="active"  missingValueTreatment="asIs" />
+		</MiningSchema>
+		<ParameterList >
+			<Parameter  name="P0000001"  label="Intercept" />
+			<Parameter  name="P0000002"  label="prevexp" />
+			<Parameter  name="P0000003"  label="jobtime" />
+			<Parameter  name="P0000004"  label="[jobcat=1]" />
+			<Parameter  name="P0000005"  label="[jobcat=2]" />
+			<Parameter  name="P0000006"  label="[jobcat=3]" />
+		</ParameterList>
+		<FactorList >
+			<Predictor  name="jobcat" />
+		</FactorList>
+		<CovariateList >
+			<Predictor  name="prevexp" />
+			<Predictor  name="jobtime" />
+		</CovariateList>
+		<PPMatrix >
+			<PPCell  value="1"  predictorName="prevexp"  parameterName="P0000002" />
+			<PPCell  value="1"  predictorName="jobtime"  parameterName="P0000003" />
+			<PPCell  value="1"  predictorName="jobcat"  parameterName="P0000004" />
+			<PPCell  value="2"  predictorName="jobcat"  parameterName="P0000005" />
+			<PPCell  value="3"  predictorName="jobcat"  parameterName="P0000006" />
+		</PPMatrix>
+		<PCovMatrix >
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000001"  pCol="P0000001"  value="584762438.688724" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000002"  pCol="P0000001"  value="-146941.792930173" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000002"  pCol="P0000002"  value="719.67229233829" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000003"  pCol="P0000001"  value="-6078486.38174361" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000003"  pCol="P0000002"  value="71.6603755558824" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000003"  pCol="P0000003"  value="74529.0543981899" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000004"  pCol="P0000001"  value="-79507438.7946988" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000004"  pCol="P0000002"  value="79932.6638291437" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000004"  pCol="P0000003"  value="30611.539020256" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000004"  pCol="P0000004"  value="78721452.7256298" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000005"  pCol="P0000001"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000005"  pCol="P0000002"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000005"  pCol="P0000003"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000005"  pCol="P0000004"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000005"  pCol="P0000005"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000001"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000002"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000003"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000004"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000005"  value="0" />
+			<PCovCell  tRow="0"  tCol="0"  pRow="P0000006"  pCol="P0000006"  value="0" />
+		</PCovMatrix>
+		<ParamMatrix >
+			<PCell  targetCategory="0"  parameterName="P0000001"  beta="-23.1333682766716"  df="1" />
+			<PCell  targetCategory="0"  parameterName="P0000002"  beta="-3.91753032973113E-017"  df="1" />
+			<PCell  targetCategory="0"  parameterName="P0000003"  beta="-3.11184224673954E-015"  df="1" />
+			<PCell  targetCategory="0"  parameterName="P0000004"  beta="44.9825203482709"  df="1" />
+			<PCell  targetCategory="0"  parameterName="P0000005"  beta="44.9825203482709"  df="1" />
+			<PCell  targetCategory="0"  parameterName="P0000006"  beta="0"  df="0" />
+		</ParamMatrix>
+	</GeneralRegressionModel>
+</PMML>

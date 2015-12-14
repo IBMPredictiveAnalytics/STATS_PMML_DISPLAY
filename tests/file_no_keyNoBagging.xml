@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+
+  <Header copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		  <Application name="IBM SPSS Statistics" version="21.0.0.0"/>
+		  <Timestamp>Fri May 18 09:36:56 2012</Timestamp>
+	</Header><DataDictionary>
+    <DataField dataType="double" displayName="Current Salary" name="salary" optype="continuous">
+			  <Value displayValue="missing" property="missing" value="0"/>
+		</DataField>  <DataField dataType="double" displayName="Employment Category" name="jobcat" optype="ordinal">
+			  <Value displayValue="Clerical" property="valid" value="1"/>
+			  <Value displayValue="Custodial" property="valid" value="2"/>
+			  <Value displayValue="Manager" property="valid" value="3"/>
+			  <Value property="missing" value="0"/>
+		</DataField>  <DataField dataType="double" displayName="Minority Classification" name="minority" optype="ordinal">
+			  <Value displayValue="No" property="valid" value="0"/>
+			  <Value displayValue="Yes" property="valid" value="1"/>
+			  <Value property="missing" value="9"/>
+		</DataField>  <DataField dataType="double" displayName="Case Count" name="$casecount" optype="continuous"/>
+    <DataField dataType="double" displayName="Months since Hire" name="jobtime" optype="continuous">
+			  <Extension extender="spss.com">
+				    <UsageType value="disable"/>
+				    <PredictivePower value="0.00707150934530599"/>
+			</Extension>
+			  <Extension extender="spss.com" name="MissingValue">
+				    <Value displayValue="missing" property="missing" value="0"/>
+			</Extension>
+			  <Interval closure="closedClosed" leftMargin="63" rightMargin="98"/>
+		</DataField>  <DataField dataType="double" displayName="Previous Experience (months)" name="prevexp" optype="continuous">
+			  <Extension extender="spss.com">
+				    <UsageType value="disable"/>
+				    <PredictivePower value="0.0094998015733139"/>
+			</Extension>
+			  <Interval closure="closedClosed" leftMargin="0" rightMargin="476"/>
+		</DataField>  <DataField dataType="double" displayName="Beginning Salary" name="salbegin" optype="continuous">
+			  <Extension extender="spss.com">
+				    <UsageType value="disable"/>
+				    <PredictivePower value="0.774606753254077"/>
+			</Extension>
+			  <Extension extender="spss.com" name="MissingValue">
+				    <Value displayValue="missing" property="missing" value="0"/>
+			</Extension>
+			  <Interval closure="closedClosed" leftMargin="9000" rightMargin="79980"/>
+		</DataField></DataDictionary>
+
+  <TransformationDictionary>
+    <DefineFunction dataType="double" name="computeBounds" optype="continuous">
+			  <ParameterField name="RobustMean"/>
+			  <ParameterField name="RobustSD"/>
+			  <ParameterField name="CutOff"/>
+			  <ParameterField name="AnalysisWeight"/>
+			  <ParameterField name="Coeff"/>
+			  <Apply function="+">
+				    <FieldRef field="RobustMean"/>
+				    <Apply function="*">
+					    <FieldRef field="Coeff"/>
+					    <Apply function="*">
+						      <FieldRef field="CutOff"/>
+						      <Apply function="/">
+							      <FieldRef field="RobustSD"/>
+							      <Apply function="sqrt">
+								        <FieldRef field="AnalysisWeight"/>
+							</Apply>
+						</Apply>
+					</Apply>
+				</Apply>
+			</Apply>
+		</DefineFunction>  <DefineFunction dataType="double" name="treatOutlier" optype="continuous">
+			  <ParameterField name="Extreme"/>
+			  <ParameterField name="OUTLIER-TREATMENT-METHOD"/>
+			  <Apply function="if">
+				    <Apply function="equal">
+					    <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+					    <Constant>asExtremeValues</Constant>
+				</Apply>
+				    <FieldRef field="Extreme"/>
+			</Apply>
+		</DefineFunction>  <DefineFunction dataType="double" name="outlierHandle" optype="continuous">
+			  <ParameterField name="Var"/>
+			  <ParameterField name="OUTLIER-TREATMENT-METHOD"/>
+			  <ParameterField name="RobustMean"/>
+			  <ParameterField name="RobustSD"/>
+			  <ParameterField name="CutOff"/>
+			  <ParameterField name="AnalysisWeight"/>
+			  <Apply function="if">
+				    <Apply function="lessThan">
+					    <FieldRef field="Var"/>
+					    <Apply function="computeBounds">
+						      <FieldRef field="RobustMean"/>
+						      <FieldRef field="RobustSD"/>
+						      <FieldRef field="CutOff"/>
+						      <FieldRef field="AnalysisWeight"/>
+						      <Constant>-1</Constant>
+					</Apply>
+				</Apply>
+				    <Apply function="treatOutlier">
+					    <Apply function="computeBounds">
+						      <FieldRef field="RobustMean"/>
+						      <FieldRef field="RobustSD"/>
+						      <FieldRef field="CutOff"/>
+						      <FieldRef field="AnalysisWeight"/>
+						      <Constant>-1</Constant>
+					</Apply>
+					    <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+				</Apply>
+				    <Apply function="if">
+					    <Apply function="greaterThan">
+						      <FieldRef field="Var"/>
+						      <Apply function="computeBounds">
+							      <FieldRef field="RobustMean"/>
+							      <FieldRef field="RobustSD"/>
+							      <FieldRef field="CutOff"/>
+							      <FieldRef field="AnalysisWeight"/>
+							      <Constant>1</Constant>
+						</Apply>
+					</Apply>
+					    <Apply function="treatOutlier">
+						      <Apply function="computeBounds">
+							      <FieldRef field="RobustMean"/>
+							      <FieldRef field="RobustSD"/>
+							      <FieldRef field="CutOff"/>
+							      <FieldRef field="AnalysisWeight"/>
+							      <Constant>1</Constant>
+						</Apply>
+						      <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+					</Apply>
+					    <FieldRef field="Var"/>
+				</Apply>
+			</Apply>
+		</DefineFunction>  <DerivedField dataType="double" displayName="Months since Hire" name="jobtime_transformed" optype="continuous">
+			  <Extension extender="spss.com">
+				    <Action parameter="3" reasonKey="OutlierTrim2ExtremeValue" stepKey="Outliers"/>
+				    <UsageType value="enable"/>
+				    <ClassOfField value="transformed feature"/>
+				    <SourceField value="jobtime"/>
+				    <PredictivePower value="0.00707150934530599"/>
+				    <HasMissingValues value="false"/>
+			</Extension>
+			  <Extension extender="spss.com">
+				    <Interval closure="closedClosed" leftMargin="63" rightMargin="98"/>
+			</Extension>
+			  <Apply function="outlierHandle">
+				    <FieldRef field="jobtime"/>
+				    <Constant dataType="string">asExtremeValues</Constant>
+				    <Constant dataType="double">81.1097046413502</Constant>
+				    <Constant dataType="double">10.0609448737135</Constant>
+				    <Constant dataType="double">3</Constant>
+				    <Constant dataType="double">1</Constant>
+			</Apply>
+		</DerivedField>  <DerivedField dataType="double" displayName="Previous Experience (months)" name="prevexp_transformed" optype="continuous">
+			  <Extension extender="spss.com">
+				    <Action parameter="3" reasonKey="OutlierTrim2ExtremeValue" stepKey="Outliers"/>
+				    <UsageType value="enable"/>
+				    <ClassOfField value="transformed feature"/>
+				    <SourceField value="prevexp"/>
+				    <PredictivePower value="0.00928077994009102"/>
+				    <HasMissingValues value="false"/>
+			</Extension>
+			  <Extension extender="spss.com">
+				    <Interval closure="closedClosed" leftMargin="0" rightMargin="374.744340087005"/>
+			</Extension>
+			  <Apply function="outlierHandle">
+				    <FieldRef field="prevexp"/>
+				    <Constant dataType="string">asExtremeValues</Constant>
+				    <Constant dataType="double">89.9055793991416</Constant>
+				    <Constant dataType="double">94.9462535626212</Constant>
+				    <Constant dataType="double">3</Constant>
+				    <Constant dataType="double">1</Constant>
+			</Apply>
+		</DerivedField>  <DerivedField dataType="double" displayName="Beginning Salary" name="salbegin_transformed" optype="continuous">
+			  <Extension extender="spss.com">
+				    <Action parameter="3" reasonKey="OutlierTrim2ExtremeValue" stepKey="Outliers"/>
+				    <UsageType value="enable"/>
+				    <ClassOfField value="transformed feature"/>
+				    <SourceField value="salbegin"/>
+				    <PredictivePower value="0.759963871387992"/>
+				    <HasMissingValues value="false"/>
+			</Extension>
+			  <Extension extender="spss.com">
+				    <Interval closure="closedClosed" leftMargin="9000" rightMargin="34376.5029270923"/>
+			</Extension>
+			  <Apply function="outlierHandle">
+				    <FieldRef field="salbegin"/>
+				    <Constant dataType="string">asExtremeValues</Constant>
+				    <Constant dataType="double">16363.1847826087</Constant>
+				    <Constant dataType="double">6004.43938149453</Constant>
+				    <Constant dataType="double">3</Constant>
+				    <Constant dataType="double">1</Constant>
+			</Apply>
+		</DerivedField></TransformationDictionary>
+
+  <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+		  <Extension extender="spss.com" name="modelID" value="0"/>
+		  <MiningSchema>
+      <Extension extender="spss.com" name="DerivedFields">
+        <MiningField importance="0.0641085062757238" name="jobtime_transformed"/>
+        <MiningField importance="0.0715134946454994" name="prevexp_transformed"/>
+        <MiningField importance="0.77645806635807" name="salbegin_transformed"/>
+      </Extension>
+			  <MiningField importance="0.0879199327207063" name="jobcat"/>
+			
+			
+			
+			  <MiningField name="salary" usageType="predicted"/>
+		    <MiningField name="jobtime"/>
+      <MiningField name="prevexp"/>
+      <MiningField name="salbegin"/>
+    </MiningSchema>
+		  <ModelStats>
+			  <UnivariateStats field="salary">
+				    <Anova>
+					    <AnovaRow degreesOfFreedom="5" fValue="383.586784664136" meanOfSquares="22172845827.5754" pValue="0" sumOfSquares="110864229137.877" type="Model"/>
+					    <AnovaRow degreesOfFreedom="468" meanOfSquares="57803987.817228" sumOfSquares="27052266298.4627" type="Error"/>
+					    <AnovaRow degreesOfFreedom="473" sumOfSquares="137916495436.34" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			  <UnivariateStats field="jobtime_transformed">
+				    <Counts totalFreq="474"/>
+				    <NumericInfo maximum="98" mean="81.1097046413502" minimum="63"/>
+				    <ContStats/>
+			</UnivariateStats>
+			  <UnivariateStats field="prevexp_transformed">
+				    <Counts totalFreq="474"/>
+				    <NumericInfo maximum="374.744340087005" mean="94.5383229985339" minimum="0"/>
+				    <ContStats/>
+			</UnivariateStats>
+			  <UnivariateStats field="salbegin_transformed">
+				    <Counts totalFreq="474"/>
+				    <NumericInfo maximum="34376.5029270923" mean="16644.6024503564" minimum="9000"/>
+				    <ContStats/>
+			</UnivariateStats>
+		</ModelStats>
+		  <ModelExplanation>
+			  <PredictiveModelQuality targetField="salary">
+				    <LiftData>
+					    <ModelLiftGraph>
+						      <LiftGraph>
+							      <XCoordinates>
+								        <Array n="21" type="int">5 28 51 74 97 120 143 166 189 212 235 258 281 304 327 350 373 396 419 442 474</Array>
+							</XCoordinates>
+							      <YCoordinates>
+								        <Array n="21" type="real">502125 1634950 1542700 1204620 1077410 812590 748500 747000 764910 707250 669810 669540 681720 618000 594900 603300 558300 518400 506100 511350 641400</Array>
+							</YCoordinates>
+							      <BoundaryValues>
+								        <Array n="21" type="real">75805.3673262302 71566.1485964846 63233.8993441815 51689.0181005755 38956.0882688449 34961.7615651804 33474.0531322623 32335.1321156602 31294.3305071595 30467.8197686259 29651.0110812095 29004.9909908798 28139.048634147 26975.2202932924 26046.5529937554 24995.4569338116 24092.2265158315 23528.0521218077 22153.5147539252 20812.3039108174 13502.0789938064</Array>
+							</BoundaryValues>
+							      <BoundaryValueMeans>
+								        <Array n="21" type="real">77035.8842844044 73164.4764369452 67579.2626345432 56856.0725808206 43932.1999716837 36407.2925152197 34128.9629254523 32816.4452242459 31708.8111951126 30863.1094231543 29966.4816259123 29333.36507187 28611.0283341947 27533.9213488272 26574.0603062368 25515.4131972929 24419.8780087083 23784.0960035322 22900.6305442939 21657.8066748969 17855.292376572</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>
+		  <ParameterList>
+			  <Parameter label="Intercept" name="P0000001"/>
+			  <Parameter label="[jobcat=1]" name="P0000002"/>
+			  <Parameter label="[jobcat=2]" name="P0000003"/>
+			  <Parameter label="[jobcat=3]" name="P0000004"/>
+			  <Parameter label="jobtime_transformed" name="P0000005"/>
+			  <Parameter label="prevexp_transformed" name="P0000006"/>
+			  <Parameter label="salbegin_transformed" name="P0000007"/>
+		</ParameterList>
+		  <FactorList>
+			  <Predictor name="jobcat"/>
+		</FactorList>
+		  <CovariateList>
+			  <Predictor name="jobtime_transformed"/>
+			  <Predictor name="prevexp_transformed"/>
+			  <Predictor name="salbegin_transformed"/>
+		</CovariateList>
+		  <PPMatrix>
+			  <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			  <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			  <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			  <PPCell parameterName="P0000005" predictorName="jobtime_transformed" value="1"/>
+			  <PPCell parameterName="P0000006" predictorName="prevexp_transformed" value="1"/>
+			  <PPCell parameterName="P0000007" predictorName="salbegin_transformed" value="1"/>
+		</PPMatrix>
+		  <ParamMatrix>
+			  <PCell beta="-2796.03888070392" df="1" parameterName="P0000001"/>
+			  <PCell beta="-9304.04819014335" df="1" parameterName="P0000002"/>
+			  <PCell beta="-3685.4081242008" df="1" parameterName="P0000003"/>
+			  <PCell beta="0" df="0" parameterName="P0000004"/>
+			  <PCell beta="186.336570623444" df="1" parameterName="P0000005"/>
+			  <PCell beta="-22.4213279766339" df="1" parameterName="P0000006"/>
+			  <PCell beta="1.89591535336391" df="1" parameterName="P0000007"/>
+		</ParamMatrix>
+	</GeneralRegressionModel>
+
+</PMML>

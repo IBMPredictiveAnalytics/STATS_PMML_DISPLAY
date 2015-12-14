@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		  <Application name="IBM SPSS Statistics" version="20.0.0.1"/>
+	</Header>
+	<DataDictionary numberOfFields="6">
+		  <DataField dataType="double" displayName="Product" name="product" optype="categorical">
+			  <Value displayValue="Product 3" value="3"/>
+			  <Value displayValue="Product 1" value="1"/>
+			  <Value displayValue="Product 2" value="2"/>
+			  <Value displayValue="0 (Missing)" property="missing" value="0"/>
+		</DataField>
+		  <DataField dataType="double" displayName="Educational Level (years)" name="educ" optype="categorical">
+			  <Value displayValue="15" value="15"/>
+			  <Value displayValue="16" value="16"/>
+			  <Value displayValue="12" value="12"/>
+			  <Value displayValue="8" value="8"/>
+			  <Value displayValue="19" value="19"/>
+			  <Value displayValue="17" value="17"/>
+			  <Value displayValue="18" value="18"/>
+			  <Value displayValue="14" value="14"/>
+			  <Value displayValue="20" value="20"/>
+			  <Value displayValue="21" value="21"/>
+			  <Value displayValue="0 (Missing)" property="missing" value="0"/>
+		</DataField>
+		  <DataField dataType="string" displayName="Gender" name="gender" optype="categorical">
+			  <Value displayValue="Male" value="m"/>
+			  <Value displayValue="Female" value="f"/>
+		</DataField>
+		  <DataField dataType="double" displayName="Minority Classification" name="minority" optype="categorical">
+			  <Value displayValue="No" value="0"/>
+			  <Value displayValue="Yes" value="1"/>
+			  <Value displayValue="9 (Missing)" property="missing" value="9"/>
+		</DataField>
+		  <DataField dataType="double" displayName="Current Salary" name="salary" optype="continuous">
+			  <Value displayValue="missing" property="missing" value="0"/>
+		</DataField>
+		  <DataField dataType="double" displayName="Months since Hire" name="jobtime" optype="continuous">
+			  <Value displayValue="missing" property="missing" value="0"/>
+		</DataField>
+	</DataDictionary>
+	<TransformationDictionary>
+		  <DerivedField dataType="double" name="$c1" optype="continuous">
+			  <NormContinuous field="salary">
+				    <LinearNorm norm="-1.0933437365965641" orig="15750"/>
+				    <LinearNorm norm="5.8902803090849263" orig="135000"/>
+			</NormContinuous>
+		</DerivedField>
+		  <DerivedField dataType="double" name="$c2" optype="continuous">
+			  <NormContinuous field="jobtime">
+				    <LinearNorm norm="-1.8000003845231125" orig="63"/>
+				    <LinearNorm norm="1.6787981219119346" orig="98"/>
+			</NormContinuous>
+		</DerivedField>
+	</TransformationDictionary>
+	<ClusteringModel algorithmName="TwoStep" functionName="clustering" modelClass="distributionBased" numberOfClusters="6">
+		  <MiningSchema>
+			  <MiningField name="product">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="1"/>
+        </Extension>
+      </MiningField>
+			  <MiningField name="educ">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="0.76577231191576"/>
+        </Extension>
+      </MiningField>
+			  <MiningField name="gender">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="0.52912915926931"/>
+        </Extension>
+      </MiningField>
+			  <MiningField name="minority">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="0.540048166490316"/>
+        </Extension>
+      </MiningField>
+			  <MiningField name="salary">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="0.719884893084108"/>
+        </Extension>
+      </MiningField>
+			  <MiningField name="jobtime">
+        <Extension extender="spss" name="Importance">
+          <Importance dataUsage="training" value="0.00292079146445106"/>
+        </Extension>
+      </MiningField>
+		  </MiningSchema>
+		  <Output>
+			  <OutputField dataType="integer" feature="entityId" name="TSC_5737" optype="categorical"/>
+		</Output>
+		  <ModelStats>
+			  <UnivariateStats field="salary">
+				    <NumericInfo maximum="135000" mean="34419.567510548477" minimum="15750" standardDeviation="17075.661464586057"/>
+			</UnivariateStats>
+			  <UnivariateStats field="jobtime">
+				    <NumericInfo maximum="98" mean="81.109704641350206" minimum="63" standardDeviation="10.060944873713538"/>
+			</UnivariateStats>
+		</ModelStats>
+		  <ComparisonMeasure kind="distance">
+			  <Extension extender="spss.com" name="x-measure" value="loglikelihood"/>
+			  <euclidean/>
+		</ComparisonMeasure>
+		  <ClusteringField field="product" fieldWeight="1" isCenterField="false"/>
+		  <ClusteringField field="educ" fieldWeight="1" isCenterField="false"/>
+		  <ClusteringField field="gender" fieldWeight="1" isCenterField="false"/>
+		  <ClusteringField field="minority" fieldWeight="1" isCenterField="false"/>
+		  <ClusteringField field="$c1" isCenterField="true"/>
+		  <ClusteringField field="$c2" isCenterField="true"/>
+		  <Cluster name="1" size="74">
+			  <Array n="2" type="real">1.8636862647280308 0.065656420665412829 </Array>
+			  <Partition name="1" size="74">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">74 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">4 25 1 0 26 8 7 0 2 1 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">74 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">70 4 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">1.1175703461273858 1.0692687202536895 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Cluster name="2" size="105">
+			  <Array n="2" type="real">-0.078097560865458687 0.021280792723426506 </Array>
+			  <Partition name="2" size="105">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">0 105 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">61 6 30 0 1 1 1 5 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">104 1 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">105 0 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">0.25070203798747598 1.1740108739509287 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Cluster name="3" size="74">
+			  <Array n="2" type="real">-0.29045053911393376 -0.084778109342589225 </Array>
+			  <Partition name="3" size="74">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">10 64 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">25 22 0 27 0 0 0 0 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">0 74 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">74 0 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">0.38130931318898947 1.0445066731335761 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Cluster name="4" size="83">
+			  <Array n="2" type="real">-0.47487027977636648 0.13998363627715479 </Array>
+			  <Partition name="4" size="83">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">0 83 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">25 6 45 3 0 2 1 1 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">43 40 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">0 83 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">0.11844938107230922 0.94560030775119397 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Cluster name="5" size="101">
+			  <Array n="2" type="real">-0.57120053221466904 -0.15753512080597137 </Array>
+			  <Partition name="5" size="101">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">0 101 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">0 0 101 0 0 0 0 0 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">0 101 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">101 0 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">0.073042989156028873 0.83135457316963546 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Cluster name="6" size="37">
+			  <Array n="2" type="real">-0.3003706170121283 0.093862895041913197 </Array>
+			  <Partition name="6" size="37">
+				    <PartitionFieldStats field="product">
+					    <Array n="3" type="int">0 10 27 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="educ">
+					    <Array n="10" type="int">1 0 13 23 0 0 0 0 0 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="gender">
+					    <Array n="2" type="int">37 0 </Array>
+				</PartitionFieldStats>
+				    <PartitionFieldStats field="minority">
+					    <Array n="2" type="int">20 17 </Array>
+				</PartitionFieldStats>
+			</Partition>
+			  <Covariances>
+				    <Matrix kind="diagonal">
+					    <Array n="2" type="real">0.043726040488732777 0.84903402465137412 </Array>
+				</Matrix>
+			</Covariances>
+		</Cluster>
+		  <Extension extender="spss.com">
+			  <X-ClusteringModel criterion="BIC" distanceMeasure="Loglikelihood" initThreshold="0" maxBranch="8" maxLevel="3" maxMemory="64">
+				    <X-CriterionIndex>
+					    <Array n="15" type="real">4099.7248034450968 3289.2391414604103 2811.0744198144093 2558.0763881811977 2401.8582563958535 2266.6189190648156 2235.713879946702 2207.4362699909925 2180.8377268222166 2187.8012549722553 2218.3774097285327 2255.4413052356376 2295.1800809303777 2338.4800675512301 2383.1426987586578 </Array>
+				</X-CriterionIndex>
+				    <X-Distances>
+					    <Array n="15" type="real">457.61309322675129 291.45262305740863 178.86927805101396 130.47932812708021 119.98993089992702 67.822781793464941 66.509067212262906 65.66953381879614 48.888498159388931 37.082184856269421 33.8383144808558 32.500874387038074 30.720268923981976 30.038946630694394 26.559239566914457 </Array>
+				</X-Distances>
+			</X-ClusteringModel>
+		</Extension>
+	</ClusteringModel>
+	<Extension extender="spss.com" name="DataDictionaryFieldProperties">
+		  <FieldFormats>
+			  <NumberFormat alignment="auto" decimalPlaces="0" decimalSymbol="local" formatType="standard" groupingSymbol="local" name="F1" width="1"/>
+			  <NumberFormat alignment="auto" decimalPlaces="0" decimalSymbol="local" formatType="standard" groupingSymbol="local" name="F2" width="2"/>
+			  <StringFormat alignment="auto" decimalPlaces="0" hexadecimal="false" name="A3" width="3"/>
+			  <NumberFormat alignment="auto" decimalPlaces="0" decimalSymbol="local" formatType="standard" groupingSymbol="local" name="F1" width="1"/>
+			  <DecoratedFormat alignment="auto" decimalPlaces="0" decimalSymbol="period" formatType="currency" groupingSymbol="comma" name="DOLLAR8" prefix="$" width="8"/>
+			  <NumberFormat alignment="auto" decimalPlaces="0" decimalSymbol="local" formatType="standard" groupingSymbol="local" name="F2" width="2"/>
+		</FieldFormats>
+		  <FieldExtensions>
+			  <FieldExtension formatName="F1" name="product"/>
+			  <FieldExtension formatName="F2" name="educ"/>
+			  <FieldExtension formatName="A3" name="gender"/>
+			  <FieldExtension formatName="F1" name="minority"/>
+			  <FieldExtension formatName="DOLLAR8" name="salary"/>
+			  <FieldExtension formatName="F2" name="jobtime"/>
+		</FieldExtensions>
+	</Extension>
+  <Extension extender="spss" name="ModelExplanation">
+    <ModelExplanation>
+      <Extension extender="spss" name="ModelProfiles">
+        <ModelProfiles dataName="" dataUsage="training" targetField="TSC_5737">
+          <ClusteringModelProfile>
+            <ModelStats>
+              <UnivariateStats field="product">
+                <Counts invalidFreq="0" missingFreq="0" totalFreq="474"/>
+                <DiscrStats>
+                  <Array n="3" type="int">84 363 27 </Array>
+                </DiscrStats>
+              </UnivariateStats>
+              <UnivariateStats field="educ">
+                <Counts invalidFreq="0" missingFreq="0" totalFreq="474"/>
+                <DiscrStats>
+                  <Array n="10" type="int">116 59 190 53 27 11 9 6 2 1 </Array>
+                </DiscrStats>
+              </UnivariateStats>
+              <UnivariateStats field="gender">
+                <Counts invalidFreq="0" missingFreq="0" totalFreq="474"/>
+                <DiscrStats>
+                  <Array n="2" type="int">258 216 </Array>
+                </DiscrStats>
+              </UnivariateStats>
+              <UnivariateStats field="minority">
+                <Counts invalidFreq="0" missingFreq="0" totalFreq="474"/>
+                <DiscrStats>
+                  <Array n="2" type="int">370 104 </Array>
+                </DiscrStats>
+              </UnivariateStats>
+              <UnivariateStats field="salary">
+                <Counts missingFreq="0" totalFreq="474"/>
+                <NumericInfo interQuartileRange="12692.671875" maximum="135000" mean="34419.5675105485" median="28888.7946428571" minimum="15750" standardDeviation="17075.6614645861">
+                  <Quantile quantileLimit="25" quantileValue="24075.140625"/>
+                  <Quantile quantileLimit="75" quantileValue="36767.8125"/>
+                </NumericInfo>
+                <ContStats>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">2 3 2 2 5 3 1 0 2 1 1 2 0 7 4 3 3 7 6 6 8 7 13 4 8 6 4 10 8 10 5 9 6 4 6 11 12 5 7 7 11 4 9 3 7 8 2 9 7 4 16 4 6 4 5 1 3 2 4 2 7 0 6 3 3 4 5 4 1 1 0 1 1 4 0 1 2 2 2 0 1 2 6 0 2 1 1 0 1 2 0 1 1 2 1 0 0 1 3 0 1 2 0 0 1 1 1 0 1 0 1 1 0 0 1 0 1 0 1 2 0 0 1 1 0 1 0 0 1 1 0 5 0 1 1 0 2 1 1 0 0 0 1 0 1 0 2 0 2 1 1 0 1 0 2 0 1 0 0 0 0 0 0 0 0 3 0 0 1 1 0 3 0 1 0 2 0 2 0 1 0 2 0 0 1 0 0 0 0 0 1 0 0 1 1 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 </Array>
+                    <Array n="400" type="real">15825 16200 16425 16725 17010 17350 17700 0 18150 18450 18750 19200 0 19671.4285714286 20025 20400 20650 20892.8571428571 21250 21525 21843.75 22114.2857142857 22430.7692307692 22725 23025 23350 23625 23970 24225 24480 24780 25133.3333333333 25450 25725 26000 26304.5454545455 26637.5 26940 27257.1428571429 27492.8571428571 27804.5454545455 28087.5 28450 28750 29087.1428571429 29355 29625 29933.3333333333 30252.8571428571 30562.5 30778.125 31162.5 31425 31650 31980 32400 32550 32925 33262.5 33495 33878.5714285714 0 34485 34740 35050 35250 35640 36000 36150 36600 0 37050 37500 37762.5 0 38400 38625 38850 39225 0 39600 39975 40250 0 40800 41100 41550 0 42000 42300 0 43000 43410 43575 43950 0 0 44875 45133.3333333333 0 45625 46000 0 0 46875 47250 47550 0 48000 0 48750 49000 0 0 50000 0 50550 0 51000 51350 0 0 52125 52650 0 53125 0 0 54000 54375 0 54955 0 55500 55750 0 56525 56750 57000 0 0 0 58125 0 58750 0 59387.5 0 60000 60375 60625 0 61250 0 61875 0 62500 0 0 0 0 0 0 0 0 65000 0 0 66000 66250 0 66833.3333333333 0 67500 0 68125 0 68750 0 69250 0 70000 0 0 70875 0 0 0 0 0 72500 0 0 73500 73750 0 0 0 75000 0 0 0 0 0 0 0 0 0 0 78187.5 78500 0 0 0 0 80000 0 0 0 81250 0 0 0 82500 0 0 0 0 83750 0 0 0 0 0 0 0 86250 0 0 0 0 0 0 0 0 0 0 0 0 0 0 90625 0 91250 0 92000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 97000 0 0 0 0 0 0 0 0 0 100000 0 0 0 0 0 0 0 0 0 0 0 103500 103750 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 110625 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 135000 </Array>
+                  </Extension>
+                </ContStats>
+              </UnivariateStats>
+              <UnivariateStats field="jobtime">
+                <Counts missingFreq="0" totalFreq="474"/>
+                <NumericInfo interQuartileRange="17.9900390625" maximum="98" mean="81.1097046413502" median="81.0002717391304" minimum="63" standardDeviation="10.0609448737135">
+                  <Quantile quantileLimit="25" quantileValue="72.0078125"/>
+                  <Quantile quantileLimit="75" quantileValue="89.9978515625"/>
+                </NumericInfo>
+                <ContStats>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">3 0 0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 15 0 0 0 0 0 0 0 0 0 0 0 18 0 0 0 0 0 0 0 0 0 0 15 0 0 0 0 0 0 0 0 0 0 0 10 0 0 0 0 0 0 0 0 0 0 21 0 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 14 0 0 0 0 0 0 0 0 0 0 0 12 0 0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 10 0 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 22 0 0 0 0 0 0 0 0 0 0 14 0 0 0 0 0 0 0 0 0 0 0 15 0 0 0 0 0 0 0 0 0 0 23 0 0 0 0 0 0 0 0 0 0 0 15 0 0 0 0 0 0 0 0 0 0 19 0 0 0 0 0 0 0 0 0 0 0 14 0 0 0 0 0 0 0 0 0 0 10 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 0 11 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 15 0 0 0 0 0 0 0 0 0 0 23 0 0 0 0 0 0 0 0 0 0 0 14 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 11 0 0 0 0 0 0 0 0 0 0 14 </Array>
+                    <Array n="400" type="real">63 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 65 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 71 0 0 0 0 0 0 0 0 0 0 72 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 82 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 89 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 95 0 0 0 0 0 0 0 0 0 0 0 96 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </ContStats>
+              </UnivariateStats>
+            </ModelStats>
+            <Cluster name="1" size="74">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">1 0.633499002274616 0.19373708733848 0.0433033175827204 0.315443344687997 0.00310514416167636 </Array>
+              </Extension>
+              <Partition name="1">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="74"/>
+                  <Array n="3" type="int">74 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="74"/>
+                  <Array n="10" type="int">4 25 1 0 26 8 7 0 2 1 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="74"/>
+                  <Array n="2" type="int">74 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="74"/>
+                  <Array n="2" type="int">70 4 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="74"/>
+                  <NumericInfo interQuartileRange="18573.1875" maximum="135000" mean="66243.2432432432" median="63797.8125" minimum="38700" standardDeviation="18051.5696284177">
+                    <Quantile quantileLimit="25" quantileValue="54938.53125"/>
+                    <Quantile quantileLimit="75" quantileValue="73511.71875"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 1 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 0 0 0 1 0 0 0 0 2 0 0 1 0 0 1 0 0 0 0 0 5 0 1 0 0 2 0 1 0 0 0 0 0 1 0 2 0 2 1 1 0 1 0 2 0 1 0 0 0 0 0 0 0 0 3 0 0 1 1 0 2 0 1 0 2 0 2 0 1 0 2 0 0 1 0 0 0 0 0 1 0 0 1 1 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 1 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 38700 0 0 0 0 40050 40200 0 0 0 0 0 0 42300 0 0 0 43650 0 0 0 0 45250 0 45625 46000 0 0 0 47250 47550 0 48000 0 48750 0 0 0 50000 0 0 0 0 51350 0 0 52125 0 0 53125 0 0 0 0 0 54955 0 55500 0 0 56525 0 57000 0 0 0 0 0 58750 0 59387.5 0 60000 60375 60625 0 61250 0 61875 0 62500 0 0 0 0 0 0 0 0 65000 0 0 66000 66250 0 66812.5 0 67500 0 68125 0 68750 0 69250 0 70000 0 0 70875 0 0 0 0 0 72500 0 0 73500 73750 0 0 0 75000 0 0 0 0 0 0 0 0 0 0 78187.5 78500 0 0 0 0 0 0 0 0 81250 0 0 0 82500 0 0 0 0 83750 0 0 0 0 0 0 0 86250 0 0 0 0 0 0 0 0 0 0 0 0 0 0 90625 0 91250 0 92000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 97000 0 0 0 0 0 0 0 0 0 100000 0 0 0 0 0 0 0 0 0 0 0 103500 103750 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 110625 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 135000 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="74"/>
+                  <NumericInfo interQuartileRange="17.46171875" maximum="98" mean="81.7702702702703" median="81.99625" minimum="64" standardDeviation="10.4035653758071">
+                    <Quantile quantileLimit="25" quantileValue="74.2765625"/>
+                    <Quantile quantileLimit="75" quantileValue="91.73828125"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 65 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 89 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 96 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+            <Cluster name="2" size="104">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">0.345631049975917 0.702423297453958 1 0.359988216586797 0.0448820576576415 0.00528515701322159 </Array>
+              </Extension>
+              <Partition name="2">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="104"/>
+                  <Array n="3" type="int">0 104 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="104"/>
+                  <Array n="10" type="int">61 6 30 0 1 0 1 5 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="104"/>
+                  <Array n="2" type="int">104 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="104"/>
+                  <Array n="2" type="int">104 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="104"/>
+                  <NumericInfo interQuartileRange="8548.734375" maximum="80000" mean="33124.3269230769" median="31103.4375" minimum="21300" standardDeviation="8582.14521741857">
+                    <Quantile quantileLimit="25" quantileValue="27361.96875"/>
+                    <Quantile quantileLimit="75" quantileValue="35910.703125"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 2 1 0 0 1 0 0 1 1 0 2 2 1 3 1 2 4 5 3 1 1 2 2 1 3 0 2 5 0 4 3 1 3 1 1 1 0 1 2 4 0 1 2 2 1 2 2 1 0 0 0 1 2 0 0 0 1 2 0 1 1 4 0 1 1 0 0 1 1 0 0 1 0 0 0 0 1 2 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 21300 0 0 22125 22500 0 0 23250 0 0 24150 24450 0 25050 25350 25800 25950 26250 26625 26925 27270 27500 27750 28050 28425 28725 29100 29380 0 29850 30234 0 30825 31150 31500 31650 32100 32400 32550 0 33150 33495 33900 0 34500 34710 35025 35250 35625 36000 36150 0 0 0 37500 37800 0 0 0 38850 39225 0 39600 39900 40275 0 40800 41100 0 0 42000 42300 0 0 43410 0 0 0 0 44875 45075 0 0 46000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 50550 0 0 0 0 0 0 52650 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 66875 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 80000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="104"/>
+                  <NumericInfo interQuartileRange="21.2005208333333" maximum="98" mean="81.4038461538462" median="82.03125" minimum="63" standardDeviation="10.9229599021806">
+                    <Quantile quantileLimit="25" quantileValue="70.0838541666667"/>
+                    <Quantile quantileLimit="75" quantileValue="91.284375"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 4 </Array>
+                    <Array n="400" type="real">63 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 65 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 71 0 0 0 0 0 0 0 0 0 0 72 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 82 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 89 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 95 0 0 0 0 0 0 0 0 0 0 0 96 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+            <Cluster name="3" size="75">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">0.0643354955375935 0.802662805189751 1 0.260879808758939 0.194213066488183 0.018111777567486 </Array>
+              </Extension>
+              <Partition name="3">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="75"/>
+                  <Array n="3" type="int">10 65 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="75"/>
+                  <Array n="10" type="int">25 22 0 27 0 1 0 0 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="75"/>
+                  <Array n="2" type="int">0 75 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="75"/>
+                  <Array n="2" type="int">75 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="75"/>
+                  <NumericInfo interQuartileRange="12347.34375" maximum="58125" mean="29455.1333333333" median="27675" minimum="15750" standardDeviation="10472.8584204837">
+                    <Quantile quantileLimit="25" quantileValue="21960.9375"/>
+                    <Quantile quantileLimit="75" quantileValue="34308.28125"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">2 1 0 2 1 1 1 0 0 0 1 0 0 2 1 0 1 1 1 2 3 0 3 0 1 1 2 2 3 0 0 2 1 1 0 1 0 0 0 1 2 1 0 0 3 2 0 0 1 0 0 0 2 0 0 0 2 2 1 0 1 0 2 1 0 0 2 0 0 1 0 1 0 1 0 0 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                    <Array n="400" type="real">15825 16200 0 16725 16950 17400 17700 0 0 0 18750 0 0 19725 20100 0 20700 20850 21150 21600 21850 0 22400 0 22950 23250 23625 23925 24150 0 0 25200 25500 25650 0 26400 0 0 0 27450 27825 28200 0 0 29100 29325 0 0 30300 0 0 0 31350 0 0 0 32550 32925 33300 0 33900 0 34455 34800 0 0 35625 0 0 36600 0 37050 0 37800 0 0 38550 38850 0 0 0 0 0 0 0 0 41550 0 0 0 0 43000 0 43500 0 0 0 0 0 0 0 0 0 0 46875 0 0 0 0 0 0 0 0 0 0 0 0 0 51000 0 0 0 0 0 0 0 0 0 54000 54375 0 0 0 0 55750 0 0 56750 0 0 0 0 58125 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="75"/>
+                  <NumericInfo interQuartileRange="17.5" maximum="98" mean="80.16" median="80.9725" minimum="64" standardDeviation="10.2470035171791">
+                    <Quantile quantileLimit="25" quantileValue="71.96875"/>
+                    <Quantile quantileLimit="75" quantileValue="89.46875"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 3 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 65 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 71 0 0 0 0 0 0 0 0 0 0 72 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 82 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 89 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 95 0 0 0 0 0 0 0 0 0 0 0 96 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+            <Cluster name="4" size="83">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">0.0841978847992086 0.0195231633779121 0.0030515276801531 1 0.306947797337529 0.010902705328918 </Array>
+              </Extension>
+              <Partition name="4">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="83"/>
+                  <Array n="3" type="int">0 83 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="83"/>
+                  <Array n="10" type="int">25 6 45 3 0 2 1 1 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="83"/>
+                  <Array n="2" type="int">43 40 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="83"/>
+                  <Array n="2" type="int">0 83 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="83"/>
+                  <NumericInfo interQuartileRange="5217.1875" maximum="49000" mean="26310.843373494" median="26283.75" minimum="16350" standardDeviation="5876.84090614546">
+                    <Quantile quantileLimit="25" quantileValue="22830.46875"/>
+                    <Quantile quantileLimit="75" quantileValue="28047.65625"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 1 0 3 1 0 0 0 1 0 2 0 3 0 1 1 1 2 1 1 1 2 0 2 0 2 3 1 2 3 3 2 1 1 3 8 1 1 2 5 2 1 0 2 0 0 1 0 2 1 0 2 0 2 0 0 0 1 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                    <Array n="400" type="real">0 0 16350 0 17000 17400 0 0 0 18450 0 19200 0 19650 0 20400 20550 20850 21225 21450 21750 22050 22425 0 23025 0 23625 24000 24300 24450 24750 25100 25500 25800 26100 26350 26625 27000 27150 27450 27780 28050 28350 0 29025 0 0 29850 0 30525 30900 0 31425 0 31950 0 0 0 33300 0 0 0 0 0 35100 35250 35700 36000 0 0 0 0 0 0 0 38400 0 0 0 0 0 0 40200 0 0 0 0 0 0 0 0 0 0 0 43950 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 49000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="83"/>
+                  <NumericInfo interQuartileRange="16.428125" maximum="98" mean="82.5180722891566" median="84.0525" minimum="64" standardDeviation="9.78346221048453">
+                    <Quantile quantileLimit="25" quantileValue="73.54375"/>
+                    <Quantile quantileLimit="75" quantileValue="89.971875"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 2 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 72 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 82 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 96 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+            <Cluster name="5" size="101">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">0.175929405088376 0.71498282105557 0.717174411618461 0.183719799125906 1 0.028007477872897 </Array>
+              </Extension>
+              <Partition name="5">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="101"/>
+                  <Array n="3" type="int">0 101 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="101"/>
+                  <Array n="10" type="int">0 0 101 0 0 0 0 0 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="101"/>
+                  <Array n="2" type="int">0 101 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="101"/>
+                  <Array n="2" type="int">101 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="101"/>
+                  <NumericInfo interQuartileRange="5167.5" maximum="40800" mean="24665.9405940594" median="23948.4375" minimum="16200" standardDeviation="4614.94792564723">
+                    <Quantile quantileLimit="25" quantileValue="21911.25"/>
+                    <Quantile quantileLimit="75" quantileValue="27078.75"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 2 1 0 1 1 0 0 2 0 0 0 0 2 3 2 1 5 1 3 3 4 5 4 5 4 0 4 2 7 2 2 1 1 2 3 2 0 1 1 3 0 4 1 1 2 1 2 0 1 0 0 1 1 0 0 0 0 1 0 1 0 2 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                    <Array n="400" type="real">0 16200 16500 0 17100 17250 0 0 18150 0 0 0 0 19650 20000 20400 20700 20910 21300 21500 21850 22125 22440 22725 23040 23400 0 23962.5 24300 24492.8571428571 24825 25200 25500 25650 26025 26300 26700 0 27300 27600 27850 0 28500 28800 29160 29400 29700 29925 0 30600 0 0 31500 31650 0 0 0 0 33300 0 33900 0 34500 0 0 0 0 36000 0 0 0 0 0 37650 0 0 0 0 0 0 0 0 0 0 40800 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="101"/>
+                  <NumericInfo interQuartileRange="13.9854166666667" maximum="98" mean="79.5247524752475" median="80.040625" minimum="63" standardDeviation="9.17343344599604">
+                    <Quantile quantileLimit="25" quantileValue="71.9833333333333"/>
+                    <Quantile quantileLimit="75" quantileValue="85.96875"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 11 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 11 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 3 </Array>
+                    <Array n="400" type="real">63 0 0 0 0 0 0 0 0 0 0 64 0 0 0 0 0 0 0 0 0 0 65 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 70 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 72 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 75 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 81 0 0 0 0 0 0 0 0 0 0 0 82 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 86 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 88 0 0 0 0 0 0 0 0 0 0 0 89 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 95 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 97 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+            <Cluster name="6" size="37">
+              <Extension extender="spss" name="CustomCluster">
+                <CustomCluster description="" label=""/>
+              </Extension>
+              <Extension extender="spss" name="Importance">
+                <Array n="6" type="real">1 0.254759512210962 0.111777356587953 0.0498007745297754 0.142937147212822 0.00395165955954602 </Array>
+              </Extension>
+              <Partition name="6">
+                <PartitionFieldStats field="product">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="37"/>
+                  <Array n="3" type="int">0 10 27 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="educ">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="37"/>
+                  <Array n="10" type="int">1 0 13 23 0 0 0 0 0 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="gender">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="37"/>
+                  <Array n="2" type="int">37 0 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="minority">
+                  <Counts invalidFreq="0" missingFreq="0" totalFreq="37"/>
+                  <Array n="2" type="int">20 17 </Array>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="salary">
+                  <Counts missingFreq="0" totalFreq="37"/>
+                  <NumericInfo interQuartileRange="2452.75568181818" maximum="35250" mean="29290.5405405405" median="30656.25" minimum="21300" standardDeviation="3570.65271495434">
+                    <Quantile quantileLimit="25" quantileValue="28420.3125"/>
+                    <Quantile quantileLimit="75" quantileValue="30873.0681818182"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 2 0 0 0 0 1 1 0 0 0 0 0 0 3 0 0 0 0 0 0 2 0 0 1 1 4 1 1 11 1 0 0 2 0 0 0 0 0 1 0 1 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 21300 0 21900 0 22425 0 0 0 0 24000 24300 0 0 0 0 0 0 26250 0 0 0 0 0 0 28425 0 0 29250 29550 30000 30300 30600 30750 31200 0 0 31950 0 0 0 0 0 33750 0 34500 0 0 35250 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+                <PartitionFieldStats field="jobtime">
+                  <Counts missingFreq="0" totalFreq="37"/>
+                  <NumericInfo interQuartileRange="13.9125" maximum="98" mean="82.054054054054" median="80.0625" minimum="66" standardDeviation="9.27046069197434">
+                    <Quantile quantileLimit="25" quantileValue="77.0875"/>
+                    <Quantile quantileLimit="75" quantileValue="91"/>
+                  </NumericInfo>
+                  <Extension extender="spss" name="EqualWidthBinning">
+                    <Array n="400" type="int">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 </Array>
+                    <Array n="400" type="real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 66 0 0 0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 68 0 0 0 0 0 0 0 0 0 0 69 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 73 0 0 0 0 0 0 0 0 0 0 74 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 76 0 0 0 0 0 0 0 0 0 0 0 77 0 0 0 0 0 0 0 0 0 0 78 0 0 0 0 0 0 0 0 0 0 79 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 84 0 0 0 0 0 0 0 0 0 0 85 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 87 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 90 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 0 0 0 0 0 0 0 92 0 0 0 0 0 0 0 0 0 0 93 0 0 0 0 0 0 0 0 0 0 0 94 0 0 0 0 0 0 0 0 0 0 95 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 98 </Array>
+                  </Extension>
+                </PartitionFieldStats>
+              </Partition>
+            </Cluster>
+          </ClusteringModelProfile>
+        </ModelProfiles>
+      </Extension>
+      <ModelQuality dataName="" dataUsage="training" targetField="TSC_5737">
+        <Extension extender="spss" name="GoodnessMeasures">
+          <Goodness description="AverageSilhouette" value="0.329798795603407"/>
+          <Goodness description="AverageSSE" value="0.0825384206339692"/>
+          <Goodness description="AverageSSB" value="0.0894572639649217"/>
+        </Extension>
+      </ModelQuality>
+    </ModelExplanation>
+  </Extension>
+
+</PMML>

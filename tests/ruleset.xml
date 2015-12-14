@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML xmlns="http://www.dmg.org/PMML-3_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://www.dmg.org/PMML-3_0 pmml-3-0.xsd">
+  <Header xmlns="" copyright="Copyright (c) Integral Solutions Ltd., 1994 - 2007. All rights reserved.">
+    <Application name="Clementine" version="11.1" />
+  </Header>
+  <DataDictionary xmlns="" numberOfFields="23">
+    <DataField name="response" optype="categorical" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="flag" />
+      <Value value="1" property="valid" />
+      <Value value="0" property="valid" />
+    </DataField>
+    <DataField name="age" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="10" rightMargin="96" closure="closedClosed" />
+    </DataField>
+    <DataField name="age_youngest_child" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="66" closure="closedClosed" />
+    </DataField>
+    <DataField name="average#balance#feed#index" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="2386" closure="closedClosed" />
+    </DataField>
+    <DataField name="bad_payment" optype="categorical" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="flag" />
+      <Value value="1" property="valid" />
+      <Value value="0" property="valid" />
+    </DataField>
+    <DataField name="branch" optype="categorical" dataType="string">
+      <Extension name="x-storageType" extender="spss" value="string" />
+      <Extension name="x-measure" extender="spss" value="set" />
+      <Value value="Catburg" property="valid" />
+      <Value value="Foxton" property="valid" />
+      <Value value="Kingsville" property="valid" />
+      <Value value="Princeton" property="valid" />
+      <Value value="Queensbury" property="valid" />
+      <Value value="Ravensville" property="valid" />
+    </DataField>
+    <DataField name="call_center_contacts" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="10" closure="closedClosed" />
+    </DataField>
+    <DataField name="debt_equity" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="10" rightMargin="96" closure="closedClosed" />
+    </DataField>
+    <DataField name="gender" optype="categorical" dataType="string">
+      <Extension name="x-storageType" extender="spss" value="string" />
+      <Extension name="x-measure" extender="spss" value="set" />
+      <Value value="F" property="valid" />
+      <Value value="M" property="valid" />
+    </DataField>
+    <DataField name="gold_card" optype="categorical" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="flag" />
+      <Value value="1" property="valid" />
+      <Value value="0" property="valid" />
+    </DataField>
+    <DataField name="household_debt_to_equity_ratio" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="10" rightMargin="84" closure="closedClosed" />
+    </DataField>
+    <DataField name="income" optype="continuous" dataType="double">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="13362.0" rightMargin="78675.0" closure="closedClosed" />
+    </DataField>
+    <DataField name="loan_accounts" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="7" closure="closedClosed" />
+    </DataField>
+    <DataField name="marital" optype="categorical" dataType="string">
+      <Extension name="x-storageType" extender="spss" value="string" />
+      <Extension name="x-measure" extender="spss" value="set" />
+      <Value value="M" property="valid" />
+      <Value value="S" property="valid" />
+      <Value value="U" property="valid" />
+    </DataField>
+    <DataField name="members_in_household" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="1" rightMargin="7" closure="closedClosed" />
+    </DataField>
+    <DataField name="months_current_account" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="-7" rightMargin="41" closure="closedClosed" />
+    </DataField>
+    <DataField name="months_customer" optype="categorical" dataType="string">
+      <Extension name="x-storageType" extender="spss" value="string" />
+      <Extension name="x-measure" extender="spss" value="set" />
+      <Value value="0" property="valid" />
+      <Value value="12" property="valid" />
+      <Value value="24" property="valid" />
+      <Value value="36" property="valid" />
+      <Value value="48" property="valid" />
+    </DataField>
+    <DataField name="non_worker_percentage" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="37" closure="closedClosed" />
+    </DataField>
+    <DataField name="number_products" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="6" closure="closedClosed" />
+    </DataField>
+    <DataField name="number_transactions" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0" rightMargin="38" closure="closedClosed" />
+    </DataField>
+    <DataField name="pension_plan" optype="categorical" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="flag" />
+      <Value value="1" property="valid" />
+      <Value value="0" property="valid" />
+    </DataField>
+    <DataField name="rfm_score" optype="continuous" dataType="double">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="0.0" rightMargin="45.267799377441406" closure="closedClosed" />
+    </DataField>
+    <DataField name="white_collar_percentage" optype="continuous" dataType="integer">
+      <Extension name="x-storageType" extender="spss" value="numeric" />
+      <Extension name="x-measure" extender="spss" value="range" />
+      <Interval leftMargin="5" rightMargin="73" closure="closedClosed" />
+    </DataField>
+  </DataDictionary>
+  <RuleSetModel xmlns="" modelName="model0" functionName="classification" algorithmName="DecisionList">
+    <MiningSchema>
+      <MiningField usageType="active" name="age" />
+      <MiningField usageType="active" name="rfm_score" />
+      <MiningField usageType="active" name="number_transactions" />
+      <MiningField usageType="active" name="income" />
+      <MiningField usageType="active" name="months_customer" />
+      <MiningField usageType="predicted" name="response" />
+    </MiningSchema>
+    <RuleSet>
+      <RuleSelectionMethod criterion="firstHit" />
+      <SimpleRule id="1" score="1" recordCount="1747.0" nbCorrect="0.0">
+        <Extension name="isDisabled" value="true" extender="spss.com" />
+        <Extension name="searchDirection" value="down" extender="spss.com" />
+        <SimplePredicate field="months_customer" operator="equal" value="0" />
+      </SimpleRule>
+      <SimpleRule id="2" score="1" recordCount="6003.0" nbCorrect="0.0">
+        <Extension name="isDisabled" value="true" extender="spss.com" />
+        <Extension name="searchDirection" value="down" extender="spss.com" />
+        <SimplePredicate field="rfm_score" operator="lessOrEqual" value="0.0" />
+      </SimpleRule>
+      <SimpleRule id="3" score="1" recordCount="555.0" nbCorrect="456.0">
+        <CompoundPredicate booleanOperator="and">
+          <SimplePredicate field="rfm_score" operator="greaterThan" value="12.33329963684082" />
+          <SimplePredicate field="income" operator="greaterThan" value="52213.0" />
+        </CompoundPredicate>
+      </SimpleRule>
+      <SimpleRule id="4" score="1" recordCount="643.0" nbCorrect="551.0">
+        <SimplePredicate field="income" operator="greaterThan" value="55267.0" />
+      </SimpleRule>
+      <SimpleRule id="5" score="1" recordCount="533.0" nbCorrect="206.0">
+        <CompoundPredicate booleanOperator="and">
+          <SimplePredicate field="number_transactions" operator="greaterThan" value="2" />
+          <SimplePredicate field="rfm_score" operator="greaterThan" value="12.33329963684082" />
+        </CompoundPredicate>
+      </SimpleRule>
+      <SimpleRule id="6" score="1" recordCount="505.0" nbCorrect="111.0">
+        <CompoundPredicate booleanOperator="and">
+          <SimplePredicate field="age" operator="greaterThan" value="30" />
+          <SimplePredicate field="age" operator="lessOrEqual" value="34" />
+        </CompoundPredicate>
+      </SimpleRule>
+      <SimpleRule id="7" score="1" recordCount="1220.0" nbCorrect="253.0">
+        <SimplePredicate field="rfm_score" operator="greaterThan" value="10.534600257873535" />
+      </SimpleRule>
+      <SimpleRule id="8" score="1" recordCount="2298.0" nbCorrect="375.0">
+        <Extension name="isDisabled" value="true" extender="spss.com" />
+        <True />
+      </SimpleRule>
+    </RuleSet>
+  </RuleSetModel>
+</PMML>
+

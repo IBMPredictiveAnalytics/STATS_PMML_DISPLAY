@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PMML 
+	 version="4.0"
+	 xmlns="http://www.dmg.org/PMML-4_0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header 
+		 copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		<Application  name="IBM SPSS Statistics"  version="20.0.0.0" />
+	</Header>
+	<DataDictionary 
+		 numberOfFields="11">
+		<DataField 
+			 name="marital"
+			 displayName="Marital status"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="Unmarried"  property="valid" />
+			<Value  value="1"  displayValue="Married"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="ed"
+			 displayName="Level of education"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="1"  displayValue="Did not complete high school"  property="valid" />
+			<Value  value="2"  displayValue="High school degree"  property="valid" />
+			<Value  value="3"  displayValue="Some college"  property="valid" />
+			<Value  value="4"  displayValue="College degree"  property="valid" />
+			<Value  value="5"  displayValue="Post-undergraduate degree"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="retire"
+			 displayName="Retired"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+			<Value  value="0"  displayValue="No"  property="valid" />
+			<Value  value="1"  displayValue="Yes"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="gender"
+			 displayName="Gender"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="Male"  property="valid" />
+			<Value  value="1"  displayValue="Female"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="custcat"
+			 displayName="Customer category"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="1"  displayValue="Basic service"  property="valid" />
+			<Value  value="2"  displayValue="E-service"  property="valid" />
+			<Value  value="3"  displayValue="Plus service"  property="valid" />
+			<Value  value="4"  displayValue="Total service"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="tenure"
+			 displayName="Months with service"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="churn"
+			 displayName="Churn within last month"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="age"
+			 displayName="Age in years"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="address"
+			 displayName="Years at current address"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="employ"
+			 displayName="Years with current employer"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="reside"
+			 displayName="Number of people in household"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel 
+		 modelType="CoxRegression"
+		 modelName="COXREG"
+		 functionName="regression"
+		 endTimeVariable="tenure"
+		 statusVariable="churn">
+		<MiningSchema >
+			<MiningField 
+				 name="churn"
+				 usageType="predicted">
+			</MiningField>
+			<MiningField  name="tenure"  usageType="active" />
+			<MiningField  name="marital"  usageType="active" />
+			<MiningField  name="address"  usageType="active" />
+			<MiningField  name="employ"  usageType="active" />
+			<MiningField  name="custcat"  usageType="active" />
+		</MiningSchema>
+		<ParameterList >
+			<Parameter  name="P0000001"  label="marital"  referencePoint="0" />
+			<Parameter  name="P0000002"  label="address"  referencePoint="0" />
+			<Parameter  name="P0000003"  label="employ"  referencePoint="0" />
+			<Parameter  name="P0000004"  label="custcat(1)"  referencePoint="0" />
+			<Parameter  name="P0000005"  label="custcat(2)"  referencePoint="0" />
+			<Parameter  name="P0000006"  label="custcat(3)"  referencePoint="0" />
+		</ParameterList>
+		<FactorList >
+			<Predictor 
+				 name="marital"
+				 contrastMatrixType="Indicator">
+				<Matrix 
+					 nbRows="2"
+					 nbCols="1">
+					<Array 
+						 type="real"
+						 n="1"> 1</Array>
+					<Array 
+						 type="real"
+						 n="1"> 0</Array>
+				</Matrix>
+			</Predictor>
+			<Predictor 
+				 name="ed"
+				 contrastMatrixType="Indicator">
+				<Matrix 
+					 nbRows="5"
+					 nbCols="4">
+					<Array 
+						 type="real"
+						 n="4"> 1 0 0 0</Array>
+					<Array 
+						 type="real"
+						 n="4"> 0 1 0 0</Array>
+					<Array 
+						 type="real"
+						 n="4"> 0 0 1 0</Array>
+					<Array 
+						 type="real"
+						 n="4"> 0 0 0 1</Array>
+					<Array 
+						 type="real"
+						 n="4"> 0 0 0 0</Array>
+				</Matrix>
+			</Predictor>
+			<Predictor 
+				 name="retire"
+				 contrastMatrixType="Indicator">
+				<Matrix 
+					 nbRows="2"
+					 nbCols="1">
+					<Array 
+						 type="real"
+						 n="1"> 1</Array>
+					<Array 
+						 type="real"
+						 n="1"> 0</Array>
+				</Matrix>
+			</Predictor>
+			<Predictor 
+				 name="gender"
+				 contrastMatrixType="Indicator">
+				<Matrix 
+					 nbRows="2"
+					 nbCols="1">
+					<Array 
+						 type="real"
+						 n="1"> 1</Array>
+					<Array 
+						 type="real"
+						 n="1"> 0</Array>
+				</Matrix>
+			</Predictor>
+			<Predictor 
+				 name="custcat"
+				 contrastMatrixType="Indicator">
+				<Matrix 
+					 nbRows="4"
+					 nbCols="3">
+					<Array 
+						 type="real"
+						 n="3"> 1 0 0</Array>
+					<Array 
+						 type="real"
+						 n="3"> 0 1 0</Array>
+					<Array 
+						 type="real"
+						 n="3"> 0 0 1</Array>
+					<Array 
+						 type="real"
+						 n="3"> 0 0 0</Array>
+				</Matrix>
+			</Predictor>
+		</FactorList>
+		<CovariateList >
+			<Predictor  name="address" />
+			<Predictor  name="employ" />
+		</CovariateList>
+		<PPMatrix >
+			<PPCell  value="0"  predictorName="marital"  parameterName="P0000001" />
+			<PPCell  value="1"  predictorName="address"  parameterName="P0000002" />
+			<PPCell  value="1"  predictorName="employ"  parameterName="P0000003" />
+			<PPCell  value="1"  predictorName="custcat"  parameterName="P0000004" />
+			<PPCell  value="2"  predictorName="custcat"  parameterName="P0000005" />
+			<PPCell  value="3"  predictorName="custcat"  parameterName="P0000006" />
+		</PPMatrix>
+		<ParamMatrix >
+			<PCell  parameterName="P0000001"  beta="0.432203239794596"  df="1" />
+			<PCell  parameterName="P0000002"  beta="-0.0614772587466409"  df="1" />
+			<PCell  parameterName="P0000003"  beta="-0.0810895543168472"  df="1" />
+			<PCell  parameterName="P0000004"  beta="0.121345941948111"  df="1" />
+			<PCell  parameterName="P0000005"  beta="-0.57432552660374"  df="1" />
+			<PCell  parameterName="P0000006"  beta="-0.658173830041442"  df="1" />
+		</ParamMatrix>
+		<EventValues >
+			<Value  value="1"  property="valid" />
+		</EventValues>
+		<BaseCumHazardTables 
+			 maxTime="72">
+			<BaselineCell  time="1"  cumHazard="0.0280255037738222" />
+			<BaselineCell  time="2"  cumHazard="0.0366516600168756" />
+			<BaselineCell  time="3"  cumHazard="0.0810914160186234" />
+			<BaselineCell  time="4"  cumHazard="0.115191438104937" />
+			<BaselineCell  time="5"  cumHazard="0.160505676934229" />
+			<BaselineCell  time="6"  cumHazard="0.180461408321744" />
+			<BaselineCell  time="7"  cumHazard="0.208049945209425" />
+			<BaselineCell  time="8"  cumHazard="0.229743175448319" />
+			<BaselineCell  time="9"  cumHazard="0.263306870763763" />
+			<BaselineCell  time="10"  cumHazard="0.298049300250085" />
+			<BaselineCell  time="11"  cumHazard="0.33481187677503" />
+			<BaselineCell  time="12"  cumHazard="0.355827629598199" />
+			<BaselineCell  time="13"  cumHazard="0.381879238222367" />
+			<BaselineCell  time="14"  cumHazard="0.399980633002294" />
+			<BaselineCell  time="15"  cumHazard="0.43268485209569" />
+			<BaselineCell  time="16"  cumHazard="0.461604453979886" />
+			<BaselineCell  time="17"  cumHazard="0.512591369036332" />
+			<BaselineCell  time="18"  cumHazard="0.517818213396444" />
+			<BaselineCell  time="19"  cumHazard="0.560939475668312" />
+			<BaselineCell  time="20"  cumHazard="0.589018105158298" />
+			<BaselineCell  time="21"  cumHazard="0.594872135791145" />
+			<BaselineCell  time="22"  cumHazard="0.636990645368647" />
+			<BaselineCell  time="23"  cumHazard="0.662274148112598" />
+			<BaselineCell  time="24"  cumHazard="0.695434319871914" />
+			<BaselineCell  time="25"  cumHazard="0.744772840976398" />
+			<BaselineCell  time="26"  cumHazard="0.795999112911929" />
+			<BaselineCell  time="27"  cumHazard="0.811135384116583" />
+			<BaselineCell  time="28"  cumHazard="0.842240828451912" />
+			<BaselineCell  time="29"  cumHazard="0.88368828216449" />
+			<BaselineCell  time="30"  cumHazard="0.935828695981826" />
+			<BaselineCell  time="31"  cumHazard="0.953781775689177" />
+			<BaselineCell  time="32"  cumHazard="0.972316535503291" />
+			<BaselineCell  time="33"  cumHazard="1.01113124300356" />
+			<BaselineCell  time="34"  cumHazard="1.02154658775401" />
+			<BaselineCell  time="35"  cumHazard="1.04337550270784" />
+			<BaselineCell  time="36"  cumHazard="1.06605537378928" />
+			<BaselineCell  time="37"  cumHazard="1.07758392240952" />
+			<BaselineCell  time="38"  cumHazard="1.11343899686913" />
+			<BaselineCell  time="39"  cumHazard="1.13926088242803" />
+			<BaselineCell  time="40"  cumHazard="1.18046472032478" />
+			<BaselineCell  time="41"  cumHazard="1.20855973154683" />
+			<BaselineCell  time="42"  cumHazard="1.22305506640998" />
+			<BaselineCell  time="43"  cumHazard="1.25399323402588" />
+			<BaselineCell  time="44"  cumHazard="1.30202754235646" />
+			<BaselineCell  time="45"  cumHazard="1.38796131892938" />
+			<BaselineCell  time="46"  cumHazard="1.4242000785445" />
+			<BaselineCell  time="47"  cumHazard="1.50110621036537" />
+			<BaselineCell  time="48"  cumHazard="1.58156313016266" />
+			<BaselineCell  time="49"  cumHazard="1.62594421458249" />
+			<BaselineCell  time="50"  cumHazard="1.69655325202033" />
+			<BaselineCell  time="51"  cumHazard="1.72282748155102" />
+			<BaselineCell  time="52"  cumHazard="1.75074092985376" />
+			<BaselineCell  time="53"  cumHazard="1.78125629228747" />
+			<BaselineCell  time="54"  cumHazard="1.85125753857197" />
+			<BaselineCell  time="55"  cumHazard="1.89051085044358" />
+			<BaselineCell  time="57"  cumHazard="1.934890863316" />
+			<BaselineCell  time="58"  cumHazard="2.07782902606961" />
+			<BaselineCell  time="59"  cumHazard="2.28994139195896" />
+			<BaselineCell  time="61"  cumHazard="2.4998515558581" />
+			<BaselineCell  time="62"  cumHazard="2.74298974019578" />
+			<BaselineCell  time="64"  cumHazard="2.84577660984495" />
+			<BaselineCell  time="65"  cumHazard="2.99438836221241" />
+			<BaselineCell  time="68"  cumHazard="3.2619621938632" />
+			<BaselineCell  time="69"  cumHazard="3.56416356969333" />
+		</BaseCumHazardTables>
+	</GeneralRegressionModel>
+</PMML>

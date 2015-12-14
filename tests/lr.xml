@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PMML 
+	 version="4.0"
+	 xmlns="http://www.dmg.org/PMML-4_0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header 
+		 copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		<Application  name="IBM SPSS Statistics"  version="21.0.0.0" />
+	</Header>
+	<DataDictionary 
+		 numberOfFields="3">
+		<DataField 
+			 name="salary"
+			 displayName="Current Salary"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="4" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="salbegin"
+			 displayName="Beginning Salary"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="4" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="jobtime"
+			 displayName="Months since Hire"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="2" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel 
+		 targetVariableName="salary"
+		 modelType="regression"
+		 functionName="regression">
+		<Extension  extender="spss.com"  name="numberParameters"  value="3" />
+		<Extension  extender="spss.com"  name="modelDF"  value="471" />
+		<MiningSchema >
+			<MiningField  name="salary"  usageType="predicted" />
+			<MiningField  name="salbegin"  usageType="active" />
+			<MiningField  name="jobtime"  usageType="active" />
+		</MiningSchema>
+		<ParameterList >
+			<Parameter  name="(Constant)"  label="(Constant)" />
+			<Parameter  name="salbegin"  label="Beginning Salary" />
+			<Parameter  name="jobtime"  label="Months since Hire" />
+		</ParameterList>
+		<CovariateList >
+			<Predictor  name="salbegin" />
+			<Predictor  name="jobtime" />
+		</CovariateList>
+		<PPMatrix >
+			<PPCell  value="1"  predictorName="salbegin"  parameterName="salbegin" />
+			<PPCell  value="1"  predictorName="jobtime"  parameterName="jobtime" />
+		</PPMatrix>
+		<PCovMatrix >
+			<PCovCell  pRow="(Constant)"  pCol="(Constant)"  value="9504773.72743469" />
+			<PCovCell  pRow="salbegin"  pCol="salbegin"  value="0.00215033955720824" />
+			<PCovCell  pRow="salbegin"  pCol="(Constant)"  value="-39.285585929902" />
+			<PCovCell  pRow="jobtime"  pCol="salbegin"  value="0.033229340885028" />
+			<PCovCell  pRow="jobtime"  pCol="jobtime"  value="1315.98033173984" />
+			<PCovCell  pRow="jobtime"  pCol="(Constant)"  value="-107304.209360012" />
+		</PCovMatrix>
+		<ParamMatrix >
+			<PCell  parameterName="(Constant)"  beta="-12120.8133252466" />
+			<PCell  parameterName="salbegin"  beta="1.91380034724951" />
+			<PCell  parameterName="jobtime"  beta="172.297367486411" />
+		</ParamMatrix>
+	</GeneralRegressionModel>
+</PMML>

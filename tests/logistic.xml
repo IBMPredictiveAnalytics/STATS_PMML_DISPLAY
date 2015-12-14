@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PMML 
+	 version="4.0"
+	 xmlns="http://www.dmg.org/PMML-4_0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header 
+		 copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		<Application  name="IBM SPSS Statistics"  version="21.0.0.0" />
+	</Header>
+	<DataDictionary 
+		 numberOfFields="9">
+		<DataField 
+			 name="default"
+			 displayName="Previously defaulted"
+			 optype="categorical"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="No"  property="valid" />
+			<Value  value="1"  displayValue="Yes"  property="valid" />
+		</DataField>
+		<DataField 
+			 name="age"
+			 displayName="Age in years"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="ed"
+			 displayName="Level of education"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="employ"
+			 displayName="Years with current employer"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="address"
+			 displayName="Years at current address"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="4" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+		<DataField 
+			 name="income"
+			 displayName="Household income in thousands"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+		</DataField>
+		<DataField 
+			 name="debtinc"
+			 displayName="Debt to income ratio (x100)"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+		</DataField>
+		<DataField 
+			 name="creddebt"
+			 displayName="Credit card debt in thousands"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+		</DataField>
+		<DataField 
+			 name="othdebt"
+			 displayName="Other debt in thousands"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="2" />
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel 
+		 targetVariableName="default"
+		 modelType="multinomialLogistic"
+		 algorithmName="x-contrastLogistic"
+		 functionName="classification">
+		<Extension  extender="spss.com"  name="numberParameters"  value="5" />
+		<MiningSchema >
+			<MiningField  name="default"  usageType="predicted"  missingValueTreatment="asIs" />
+			<MiningField  name="employ"  usageType="active"  missingValueTreatment="asIs" />
+			<MiningField  name="address"  usageType="active"  missingValueTreatment="asIs" />
+			<MiningField  name="debtinc"  usageType="active"  missingValueTreatment="asIs" />
+			<MiningField  name="creddebt"  usageType="active"  missingValueTreatment="asIs" />
+		</MiningSchema>
+		<ParameterList >
+			<Parameter  name="P0000001"  label="Constant" />
+			<Parameter  name="P0000002"  label="employ" />
+			<Parameter  name="P0000003"  label="address" />
+			<Parameter  name="P0000004"  label="debtinc" />
+			<Parameter  name="P0000005"  label="creddebt" />
+		</ParameterList>
+		<CovariateList >
+			<Predictor  name="employ" />
+			<Predictor  name="address" />
+			<Predictor  name="debtinc" />
+			<Predictor  name="creddebt" />
+		</CovariateList>
+		<PPMatrix >
+			<PPCell  value="1"  predictorName="employ"  parameterName="P0000002" />
+			<PPCell  value="1"  predictorName="address"  parameterName="P0000003" />
+			<PPCell  value="1"  predictorName="debtinc"  parameterName="P0000004" />
+			<PPCell  value="1"  predictorName="creddebt"  parameterName="P0000005" />
+		</PPMatrix>
+		<PCovMatrix >
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000001"  pCol="P0000001"  value="0.0632739193489514" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000002"  pCol="P0000001"  value="-0.00256198887086445" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000002"  pCol="P0000002"  value="0.000787228384439012" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000003"  pCol="P0000001"  value="-0.00181158720310522" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000003"  pCol="P0000002"  value="4.01372119025844E-005" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000003"  pCol="P0000003"  value="0.00038414647976328" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000004"  pCol="P0000001"  value="-0.00315098920395273" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000004"  pCol="P0000002"  value="3.86357067883833E-005" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000004"  pCol="P0000003"  value="-2.00322636350794E-005" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000004"  pCol="P0000004"  value="0.000343842516739538" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000005"  pCol="P0000001"  value="0.00692980556309692" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000005"  pCol="P0000002"  value="-0.00153726828386576" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000005"  pCol="P0000003"  value="-0.000429737826470391" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000005"  pCol="P0000004"  value="-0.000647775104720426" />
+			<PCovCell  tRow="1"  tCol="1"  pRow="P0000005"  pCol="P0000005"  value="0.0076161736662231" />
+		</PCovMatrix>
+		<ParamMatrix >
+			<PCell  targetCategory="1"  parameterName="P0000001"  beta="-0.791067003199752"  df="1" />
+			<PCell  targetCategory="1"  parameterName="P0000002"  beta="-0.242598059055776"  df="1" />
+			<PCell  targetCategory="1"  parameterName="P0000003"  beta="-0.0812454877332867"  df="1" />
+			<PCell  targetCategory="1"  parameterName="P0000004"  beta="0.0882665849310384"  df="1" />
+			<PCell  targetCategory="1"  parameterName="P0000005"  beta="0.572998195386895"  df="1" />
+		</ParamMatrix>
+	</GeneralRegressionModel>
+</PMML>

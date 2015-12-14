@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header copyright="(C) Copyright IBM Corp. 1989, 2011.">
+		<Application name="IBM SPSS Statistics 20.0" version="20.0.0.1"/>
+	</Header>
+	<DataDictionary numberOfFields="22">
+		<DataField dataType="double" displayName="顧客" name="顧客" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="ベーシック サービス" property="valid" value="1"/>
+			<Value displayValue="E-サービス" property="valid" value="2"/>
+			<Value displayValue="プラス サービス" property="valid" value="3"/>
+			<Value displayValue="トータル サービス" property="valid" value="4"/>
+		</DataField>
+		<DataField dataType="double" displayName="地域" name="地域" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="地域 1" property="valid" value="1"/>
+			<Value displayValue="地域 2" property="valid" value="2"/>
+			<Value displayValue="地域 3" property="valid" value="3"/>
+		</DataField>
+		<DataField dataType="double" displayName="婚姻" name="婚姻" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="未婚" property="valid" value="0"/>
+			<Value displayValue="既婚" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="教育" name="教育" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="高校未満" property="valid" value="1"/>
+			<Value displayValue="高校卒" property="valid" value="2"/>
+			<Value displayValue="短大卒" property="valid" value="3"/>
+			<Value displayValue="4年生大学卒" property="valid" value="4"/>
+			<Value displayValue="大学院卒" property="valid" value="5"/>
+		</DataField>
+		<DataField dataType="double" displayName="退職" name="退職" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="10"/>
+			<Extension extender="spss.com" name="decimals" value="3"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="性別" name="性別" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="男性" property="valid" value="0"/>
+			<Value displayValue="女性" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v1" name="v1" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v4" name="v4" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v5" name="v5" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v6" name="v6" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v7" name="v7" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v8" name="v8" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v9" name="v9" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="v10" name="v10" optype="categorical">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+			<Value displayValue="いいえ" property="valid" value="0"/>
+			<Value displayValue="はい" property="valid" value="1"/>
+		</DataField>
+		<DataField dataType="double" displayName="年齢" name="年齢" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+		</DataField>
+		<DataField dataType="double" displayName="住所" name="住所" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+		</DataField>
+		<DataField dataType="double" displayName="収入" name="収入" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="10"/>
+			<Extension extender="spss.com" name="decimals" value="3"/>
+		</DataField>
+		<DataField dataType="double" displayName="雇用" name="雇用" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+		</DataField>
+		<DataField dataType="double" displayName="世帯人数" name="世帯人数" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="8"/>
+			<Extension extender="spss.com" name="decimals" value="0"/>
+		</DataField>
+		<DataField dataType="double" displayName="v2" name="v2" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="10"/>
+			<Extension extender="spss.com" name="decimals" value="3"/>
+		</DataField>
+		<DataField dataType="double" displayName="v3" name="v3" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="10"/>
+			<Extension extender="spss.com" name="decimals" value="3"/>
+		</DataField>
+		<DataField dataType="double" displayName="v11" name="v11" optype="continuous">
+			<Extension extender="spss.com" name="format" value="5"/>
+			<Extension extender="spss.com" name="width" value="10"/>
+			<Extension extender="spss.com" name="decimals" value="3"/>
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel functionName="classification" modelName="multinomialLogistic" modelType="multinomialLogistic" targetVariableName="顧客">
+		<Extension extender="spss.com" name="numberParameters" value="72"/>
+		<MiningSchema>
+			<MiningField missingValueTreatment="asIs" name="顧客" usageType="predicted"/>
+			<MiningField missingValueTreatment="asIs" name="教育" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v4" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v5" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v6" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v7" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v8" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v9" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v10" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="収入" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v2" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v3" usageType="active"/>
+			<MiningField missingValueTreatment="asIs" name="v11" usageType="active"/>
+		</MiningSchema>
+		<ParameterList>
+			<Parameter label="Intercept" name="P0000001"/>
+			<Parameter label="収入" name="P0000002"/>
+			<Parameter label="[教育=1]" name="P0000003"/>
+			<Parameter label="[教育=2]" name="P0000004"/>
+			<Parameter label="[教育=3]" name="P0000005"/>
+			<Parameter label="[教育=4]" name="P0000006"/>
+			<Parameter label="[教育=5]" name="P0000007"/>
+			<Parameter label="v2" name="P0000008"/>
+			<Parameter label="v3" name="P0000009"/>
+			<Parameter label="[v4=0]" name="P0000010"/>
+			<Parameter label="[v4=1]" name="P0000011"/>
+			<Parameter label="[v5=0]" name="P0000012"/>
+			<Parameter label="[v5=1]" name="P0000013"/>
+			<Parameter label="[v6=0]" name="P0000014"/>
+			<Parameter label="[v6=1]" name="P0000015"/>
+			<Parameter label="[v7=0]" name="P0000016"/>
+			<Parameter label="[v7=1]" name="P0000017"/>
+			<Parameter label="[v8=0]" name="P0000018"/>
+			<Parameter label="[v8=1]" name="P0000019"/>
+			<Parameter label="[v9=0]" name="P0000020"/>
+			<Parameter label="[v9=1]" name="P0000021"/>
+			<Parameter label="[v10=0]" name="P0000022"/>
+			<Parameter label="[v10=1]" name="P0000023"/>
+			<Parameter label="v11" name="P0000024"/>
+		</ParameterList>
+		<FactorList>
+			<Predictor name="教育"/>
+			<Predictor name="v4"/>
+			<Predictor name="v5"/>
+			<Predictor name="v6"/>
+			<Predictor name="v7"/>
+			<Predictor name="v8"/>
+			<Predictor name="v9"/>
+			<Predictor name="v10"/>
+		</FactorList>
+		<CovariateList>
+			<Predictor name="収入"/>
+			<Predictor name="v2"/>
+			<Predictor name="v3"/>
+			<Predictor name="v11"/>
+		</CovariateList>
+		<PPMatrix>
+			<PPCell parameterName="P0000002" predictorName="収入" value="1"/>
+			<PPCell parameterName="P0000003" predictorName="教育" value="1"/>
+			<PPCell parameterName="P0000004" predictorName="教育" value="2"/>
+			<PPCell parameterName="P0000005" predictorName="教育" value="3"/>
+			<PPCell parameterName="P0000006" predictorName="教育" value="4"/>
+			<PPCell parameterName="P0000007" predictorName="教育" value="5"/>
+			<PPCell parameterName="P0000008" predictorName="v2" value="1"/>
+			<PPCell parameterName="P0000009" predictorName="v3" value="1"/>
+			<PPCell parameterName="P0000010" predictorName="v4" value="0"/>
+			<PPCell parameterName="P0000011" predictorName="v4" value="1"/>
+			<PPCell parameterName="P0000012" predictorName="v5" value="0"/>
+			<PPCell parameterName="P0000013" predictorName="v5" value="1"/>
+			<PPCell parameterName="P0000014" predictorName="v6" value="0"/>
+			<PPCell parameterName="P0000015" predictorName="v6" value="1"/>
+			<PPCell parameterName="P0000016" predictorName="v7" value="0"/>
+			<PPCell parameterName="P0000017" predictorName="v7" value="1"/>
+			<PPCell parameterName="P0000018" predictorName="v8" value="0"/>
+			<PPCell parameterName="P0000019" predictorName="v8" value="1"/>
+			<PPCell parameterName="P0000020" predictorName="v9" value="0"/>
+			<PPCell parameterName="P0000021" predictorName="v9" value="1"/>
+			<PPCell parameterName="P0000022" predictorName="v10" value="0"/>
+			<PPCell parameterName="P0000023" predictorName="v10" value="1"/>
+			<PPCell parameterName="P0000024" predictorName="v11" value="1"/>
+		</PPMatrix>
+		<ParamMatrix>
+			<PCell beta="-0.932408797476801" df="1" parameterName="P0000001" targetCategory="2"/>
+			<PCell beta="0.000393040263536689" df="1" parameterName="P0000002" targetCategory="2"/>
+			<PCell beta="-2.4229481840743" df="1" parameterName="P0000003" targetCategory="2"/>
+			<PCell beta="-1.03950854061115" df="1" parameterName="P0000004" targetCategory="2"/>
+			<PCell beta="-1.91825927313857" df="1" parameterName="P0000005" targetCategory="2"/>
+			<PCell beta="-0.315254187854854" df="1" parameterName="P0000006" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000007" targetCategory="2"/>
+			<PCell beta="-0.449416262267731" df="1" parameterName="P0000008" targetCategory="2"/>
+			<PCell beta="0.00569059880467809" df="1" parameterName="P0000009" targetCategory="2"/>
+			<PCell beta="-1.76418053803053" df="1" parameterName="P0000010" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000011" targetCategory="2"/>
+			<PCell beta="-0.800317650035845" df="1" parameterName="P0000012" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000013" targetCategory="2"/>
+			<PCell beta="-1.73844617236458" df="1" parameterName="P0000014" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000015" targetCategory="2"/>
+			<PCell beta="0.443097091363441" df="1" parameterName="P0000016" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000017" targetCategory="2"/>
+			<PCell beta="-0.174621507890994" df="1" parameterName="P0000018" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000019" targetCategory="2"/>
+			<PCell beta="1.20003486847175" df="1" parameterName="P0000020" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000021" targetCategory="2"/>
+			<PCell beta="0.247289905414072" df="1" parameterName="P0000022" targetCategory="2"/>
+			<PCell beta="0" df="0" parameterName="P0000023" targetCategory="2"/>
+			<PCell beta="2.79180362291865" df="1" parameterName="P0000024" targetCategory="2"/>
+			<PCell beta="810.500672547321" df="1" parameterName="P0000001" targetCategory="3"/>
+			<PCell beta="-0.389590877107433" df="1" parameterName="P0000002" targetCategory="3"/>
+			<PCell beta="104.987599690534" df="1" parameterName="P0000003" targetCategory="3"/>
+			<PCell beta="116.908389122171" df="1" parameterName="P0000004" targetCategory="3"/>
+			<PCell beta="14.5546233049187" df="1" parameterName="P0000005" targetCategory="3"/>
+			<PCell beta="89.8942204935274" df="1" parameterName="P0000006" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000007" targetCategory="3"/>
+			<PCell beta="-6.12070546546615" df="1" parameterName="P0000008" targetCategory="3"/>
+			<PCell beta="0.0649973401314304" df="1" parameterName="P0000009" targetCategory="3"/>
+			<PCell beta="-238.447172396717" df="1" parameterName="P0000010" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000011" targetCategory="3"/>
+			<PCell beta="-244.51619384889" df="1" parameterName="P0000012" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000013" targetCategory="3"/>
+			<PCell beta="111.261684836057" df="1" parameterName="P0000014" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000015" targetCategory="3"/>
+			<PCell beta="-293.374270813213" df="1" parameterName="P0000016" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000017" targetCategory="3"/>
+			<PCell beta="-284.552585049315" df="1" parameterName="P0000018" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000019" targetCategory="3"/>
+			<PCell beta="-297.42957523882" df="1" parameterName="P0000020" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000021" targetCategory="3"/>
+			<PCell beta="-362.39897937799" df="1" parameterName="P0000022" targetCategory="3"/>
+			<PCell beta="0" df="0" parameterName="P0000023" targetCategory="3"/>
+			<PCell beta="75.4378516080921" df="1" parameterName="P0000024" targetCategory="3"/>
+			<PCell beta="817.475427544418" df="1" parameterName="P0000001" targetCategory="4"/>
+			<PCell beta="-0.393298948048963" df="1" parameterName="P0000002" targetCategory="4"/>
+			<PCell beta="103.687208698216" df="1" parameterName="P0000003" targetCategory="4"/>
+			<PCell beta="115.935631002177" df="1" parameterName="P0000004" targetCategory="4"/>
+			<PCell beta="13.2346114011519" df="1" parameterName="P0000005" targetCategory="4"/>
+			<PCell beta="89.9782530696108" df="1" parameterName="P0000006" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000007" targetCategory="4"/>
+			<PCell beta="-6.24067305536219" df="1" parameterName="P0000008" targetCategory="4"/>
+			<PCell beta="0.0667336602455662" df="1" parameterName="P0000009" targetCategory="4"/>
+			<PCell beta="-243.453301253955" df="1" parameterName="P0000010" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000011" targetCategory="4"/>
+			<PCell beta="-251.913421052932" df="1" parameterName="P0000012" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000013" targetCategory="4"/>
+			<PCell beta="105.430000792636" df="1" parameterName="P0000014" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000015" targetCategory="4"/>
+			<PCell beta="-292.843648284848" df="1" parameterName="P0000016" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000017" targetCategory="4"/>
+			<PCell beta="-284.671278438568" df="1" parameterName="P0000018" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000019" targetCategory="4"/>
+			<PCell beta="-298.525205064283" df="1" parameterName="P0000020" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000021" targetCategory="4"/>
+			<PCell beta="-362.40130542837" df="1" parameterName="P0000022" targetCategory="4"/>
+			<PCell beta="0" df="0" parameterName="P0000023" targetCategory="4"/>
+			<PCell beta="77.2080735373786" df="1" parameterName="P0000024" targetCategory="4"/>
+		</ParamMatrix>
+	</GeneralRegressionModel>
+</PMML>

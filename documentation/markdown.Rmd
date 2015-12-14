@@ -1,0 +1,31 @@
+STATS PMML DISPLAY Extension Command
+====================================
+
+Display summary model information in PMML files.
+
+STATS PMML DISPLAY  
+FILES="*file-expression*"^&#42;
+
+/HELP
+
+^&#42; Required  
+^&#42;&#42; Default
+
+STATS PMML DISPLAY /HELP displays this help and does nothing else.
+
+Examples:
+```
+STATS PMML DISPLAY FILES="c:/mymodels/regression.xml".
+
+STATS PMML DISPLAY FILES="c:/mymodels/*.xml".
+```
+
+
+**file-expression** can be the name of an (xml) PMML file or a wildcard expression.
+Statistics file handles are supported.
+
+If a selected file is not a PMML file or from DISCRIMINANT, it is skipped
+with a message.
+
+This command requires at least Statistics version 20.
+

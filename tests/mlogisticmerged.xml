@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+
+  <Header copyright="Copyright (c) IBM Corp. 1999, 2011.">
+    <Application name="IBM SPSS Statistics" version="21.0.0.0"/>
+  </Header>
+
+  <DataDictionary>
+    <DataField dataType="double" displayName="Employment Category" name="jobcat" optype="categorical">
+      <Extension extender="spss.com" name="format" value="5"/>
+      <Extension extender="spss.com" name="width" value="1"/>
+      <Extension extender="spss.com" name="decimals" value="0"/>
+      <Value displayValue="Clerical" property="valid" value="1"/>
+      <Value displayValue="Custodial" property="valid" value="2"/>
+      <Value displayValue="Manager" property="valid" value="3"/>
+      <Value displayValue="0 (Missing)" property="missing" value="0"/>
+    </DataField>
+    <DataField dataType="double" displayName="Previous Experience (months)" name="prevexp" optype="continuous">
+      <Extension extender="spss.com" name="format" value="5"/>
+      <Extension extender="spss.com" name="width" value="6"/>
+      <Extension extender="spss.com" name="decimals" value="0"/>
+    </DataField>
+    <DataField dataType="double" displayName="Months since Hire" name="jobtime" optype="continuous">
+      <Extension extender="spss.com" name="format" value="5"/>
+      <Extension extender="spss.com" name="width" value="2"/>
+      <Extension extender="spss.com" name="decimals" value="0"/>
+      <Value displayValue="missing" property="missing" value="0"/>
+    </DataField>
+    <DataField dataType="double" name="salary" optype="continuous">
+      <Value property="missing" value="0.00000000000000000E+000"/>
+    </DataField>
+    <DataField dataType="double" name="salbegin" optype="continuous">
+      <Value property="missing" value="0.00000000000000000E+000"/>
+    </DataField>
+  </DataDictionary>
+
+  <TransformationDictionary>
+    <DerivedField dataType="double" name="manager" optype="categorical">
+      <Extension extender="spss.com" name="decimals" value="2"/>
+      <Extension extender="spss.com" name="width" value="6"/>
+      <Extension extender="spss.com" name="format" value="5"/>
+      <Apply function="if">
+        <Apply function="greaterThan">
+          <FieldRef field="jobcat"/>
+          <Constant dataType="double">2</Constant>
+        </Apply>
+        <Constant dataType="double">1</Constant>
+        <Constant dataType="double">0</Constant>
+      </Apply>
+      <Value displayValue=".00" property="valid" value="0"/>
+      <Value displayValue="1.00" property="valid" value="1"/>
+    </DerivedField>
+    <DerivedField dataType="double" name="theroot" optype="continuous">
+      <Apply function="sqrt">
+        <FieldRef field="salary"/>
+      </Apply>
+    </DerivedField>
+    <DerivedField dataType="double" name="themean" optype="continuous">
+      <Apply function="/">
+        <Apply function="+">
+          <FieldRef field="salary"/>
+          <FieldRef field="salbegin"/>
+        </Apply>
+        <Constant dataType="double">2</Constant>
+      </Apply>
+    </DerivedField>
+  </TransformationDictionary>
+
+  <GeneralRegressionModel algorithmName="multinomialLogistic" functionName="classification" modelType="multinomialLogistic" targetVariableName="manager">
+    <Extension extender="spss.com" name="numberParameters" value="6"/>
+    <MiningSchema>
+      <Extension extender="spss.com" name="DerivedFields">
+        <MiningField missingValueTreatment="asIs" name="manager" usageType="predicted"/>
+      </Extension>
+      <MiningField missingValueTreatment="asIs" name="jobcat" usageType="active"/>
+      <MiningField missingValueTreatment="asIs" name="prevexp" usageType="active"/>
+      <MiningField missingValueTreatment="asIs" name="jobtime" usageType="active"/>
+    </MiningSchema>
+    <ParameterList>
+      <Parameter label="Intercept" name="P0000001"/>
+      <Parameter label="prevexp" name="P0000002"/>
+      <Parameter label="jobtime" name="P0000003"/>
+      <Parameter label="[jobcat=1]" name="P0000004"/>
+      <Parameter label="[jobcat=2]" name="P0000005"/>
+      <Parameter label="[jobcat=3]" name="P0000006"/>
+    </ParameterList>
+    <FactorList>
+      <Predictor name="jobcat"/>
+    </FactorList>
+    <CovariateList>
+      <Predictor name="prevexp"/>
+      <Predictor name="jobtime"/>
+    </CovariateList>
+    <PPMatrix>
+      <PPCell parameterName="P0000002" predictorName="prevexp" value="1"/>
+      <PPCell parameterName="P0000003" predictorName="jobtime" value="1"/>
+      <PPCell parameterName="P0000004" predictorName="jobcat" value="1"/>
+      <PPCell parameterName="P0000005" predictorName="jobcat" value="2"/>
+      <PPCell parameterName="P0000006" predictorName="jobcat" value="3"/>
+    </PPMatrix>
+    <PCovMatrix>
+      <PCovCell pCol="P0000001" pRow="P0000001" tCol="0" tRow="0" value="584762438.688724"/>
+      <PCovCell pCol="P0000001" pRow="P0000002" tCol="0" tRow="0" value="-146941.792930173"/>
+      <PCovCell pCol="P0000002" pRow="P0000002" tCol="0" tRow="0" value="719.67229233829"/>
+      <PCovCell pCol="P0000001" pRow="P0000003" tCol="0" tRow="0" value="-6078486.38174361"/>
+      <PCovCell pCol="P0000002" pRow="P0000003" tCol="0" tRow="0" value="71.6603755558824"/>
+      <PCovCell pCol="P0000003" pRow="P0000003" tCol="0" tRow="0" value="74529.0543981899"/>
+      <PCovCell pCol="P0000001" pRow="P0000004" tCol="0" tRow="0" value="-79507438.7946988"/>
+      <PCovCell pCol="P0000002" pRow="P0000004" tCol="0" tRow="0" value="79932.6638291437"/>
+      <PCovCell pCol="P0000003" pRow="P0000004" tCol="0" tRow="0" value="30611.539020256"/>
+      <PCovCell pCol="P0000004" pRow="P0000004" tCol="0" tRow="0" value="78721452.7256298"/>
+      <PCovCell pCol="P0000001" pRow="P0000005" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000002" pRow="P0000005" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000003" pRow="P0000005" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000004" pRow="P0000005" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000005" pRow="P0000005" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000001" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000002" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000003" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000004" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000005" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+      <PCovCell pCol="P0000006" pRow="P0000006" tCol="0" tRow="0" value="0"/>
+    </PCovMatrix>
+    <ParamMatrix>
+      <PCell beta="-23.1333682766716" df="1" parameterName="P0000001" targetCategory="0"/>
+      <PCell beta="-3.91753032973113E-017" df="1" parameterName="P0000002" targetCategory="0"/>
+      <PCell beta="-3.11184224673954E-015" df="1" parameterName="P0000003" targetCategory="0"/>
+      <PCell beta="44.9825203482709" df="1" parameterName="P0000004" targetCategory="0"/>
+      <PCell beta="44.9825203482709" df="1" parameterName="P0000005" targetCategory="0"/>
+      <PCell beta="0" df="0" parameterName="P0000006" targetCategory="0"/>
+    </ParamMatrix>
+  </GeneralRegressionModel>
+
+</PMML>

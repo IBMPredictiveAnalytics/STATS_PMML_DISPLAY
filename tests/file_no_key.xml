@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?><PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Header copyright="Copyright (c) IBM Corp. 1999, 2011.">
+    <Application name="IBM SPSS Statistics" version="21.0.0.0"/>
+    <Timestamp>Fri May 18 12:04:40 2012
+</Timestamp>
+  </Header><DataDictionary>
+    <DataField dataType="double" displayName="Current Salary" name="salary" optype="continuous">
+			  <Value displayValue="missing" property="missing" value="0"/>
+		</DataField>  <DataField dataType="double" displayName="Employment Category" name="jobcat" optype="ordinal">
+			  <Value displayValue="Clerical" property="valid" value="1"/>
+			  <Value displayValue="Custodial" property="valid" value="2"/>
+			  <Value displayValue="Manager" property="valid" value="3"/>
+			  <Value property="missing" value="0"/>
+		</DataField>  <DataField dataType="double" displayName="Minority Classification" name="minority" optype="ordinal">
+			  <Value displayValue="No" property="valid" value="0"/>
+			  <Value displayValue="Yes" property="valid" value="1"/>
+			  <Value property="missing" value="9"/>
+		</DataField>  <DataField dataType="string" displayName="Gender" name="gender" optype="categorical">
+			  <Value displayValue="Female" property="valid" value="f"/>
+			  <Value displayValue="Male" property="valid" value="m"/>
+		</DataField>  <DataField dataType="double" displayName="Case Count" name="$casecount" optype="continuous"/>
+    <DataField dataType="double" displayName="Months since Hire" name="jobtime" optype="continuous">
+			  <Extension extender="spss.com">
+				    <UsageType value="disable"/>
+				    <PredictivePower value="0.00707150934530599"/>
+			</Extension>
+			  <Extension extender="spss.com" name="MissingValue">
+				    <Value displayValue="missing" property="missing" value="0"/>
+			</Extension>
+			  <Interval closure="closedClosed" leftMargin="63" rightMargin="98"/>
+		</DataField>  <DataField dataType="double" displayName="Previous Experience (months)" name="prevexp" optype="continuous">
+			  <Extension extender="spss.com">
+				    <UsageType value="disable"/>
+				    <PredictivePower value="0.0094998015733139"/>
+			</Extension>
+			  <Interval closure="closedClosed" leftMargin="0" rightMargin="476"/>
+		</DataField></DataDictionary><TransformationDictionary>
+    <DefineFunction dataType="double" name="computeBounds" optype="continuous">
+			  <ParameterField name="RobustMean"/>
+			  <ParameterField name="RobustSD"/>
+			  <ParameterField name="CutOff"/>
+			  <ParameterField name="AnalysisWeight"/>
+			  <ParameterField name="Coeff"/>
+			  <Apply function="+">
+				    <FieldRef field="RobustMean"/>
+				    <Apply function="*">
+					    <FieldRef field="Coeff"/>
+					    <Apply function="*">
+						      <FieldRef field="CutOff"/>
+						      <Apply function="/">
+							      <FieldRef field="RobustSD"/>
+							      <Apply function="sqrt">
+								        <FieldRef field="AnalysisWeight"/>
+							</Apply>
+						</Apply>
+					</Apply>
+				</Apply>
+			</Apply>
+		</DefineFunction>  <DefineFunction dataType="double" name="treatOutlier" optype="continuous">
+			  <ParameterField name="Extreme"/>
+			  <ParameterField name="OUTLIER-TREATMENT-METHOD"/>
+			  <Apply function="if">
+				    <Apply function="equal">
+					    <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+					    <Constant>asExtremeValues</Constant>
+				</Apply>
+				    <FieldRef field="Extreme"/>
+			</Apply>
+		</DefineFunction>  <DefineFunction dataType="double" name="outlierHandle" optype="continuous">
+			  <ParameterField name="Var"/>
+			  <ParameterField name="OUTLIER-TREATMENT-METHOD"/>
+			  <ParameterField name="RobustMean"/>
+			  <ParameterField name="RobustSD"/>
+			  <ParameterField name="CutOff"/>
+			  <ParameterField name="AnalysisWeight"/>
+			  <Apply function="if">
+				    <Apply function="lessThan">
+					    <FieldRef field="Var"/>
+					    <Apply function="computeBounds">
+						      <FieldRef field="RobustMean"/>
+						      <FieldRef field="RobustSD"/>
+						      <FieldRef field="CutOff"/>
+						      <FieldRef field="AnalysisWeight"/>
+						      <Constant>-1</Constant>
+					</Apply>
+				</Apply>
+				    <Apply function="treatOutlier">
+					    <Apply function="computeBounds">
+						      <FieldRef field="RobustMean"/>
+						      <FieldRef field="RobustSD"/>
+						      <FieldRef field="CutOff"/>
+						      <FieldRef field="AnalysisWeight"/>
+						      <Constant>-1</Constant>
+					</Apply>
+					    <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+				</Apply>
+				    <Apply function="if">
+					    <Apply function="greaterThan">
+						      <FieldRef field="Var"/>
+						      <Apply function="computeBounds">
+							      <FieldRef field="RobustMean"/>
+							      <FieldRef field="RobustSD"/>
+							      <FieldRef field="CutOff"/>
+							      <FieldRef field="AnalysisWeight"/>
+							      <Constant>1</Constant>
+						</Apply>
+					</Apply>
+					    <Apply function="treatOutlier">
+						      <Apply function="computeBounds">
+							      <FieldRef field="RobustMean"/>
+							      <FieldRef field="RobustSD"/>
+							      <FieldRef field="CutOff"/>
+							      <FieldRef field="AnalysisWeight"/>
+							      <Constant>1</Constant>
+						</Apply>
+						      <FieldRef field="OUTLIER-TREATMENT-METHOD"/>
+					</Apply>
+					    <FieldRef field="Var"/>
+				</Apply>
+			</Apply>
+		</DefineFunction>  <DerivedField dataType="double" displayName="Months since Hire" name="jobtime_transformed" optype="continuous">
+			  <Extension extender="spss.com">
+				    <Action parameter="3" reasonKey="OutlierTrim2ExtremeValue" stepKey="Outliers"/>
+				    <UsageType value="enable"/>
+				    <ClassOfField value="transformed feature"/>
+				    <SourceField value="jobtime"/>
+				    <PredictivePower value="0.00707150934530599"/>
+				    <HasMissingValues value="false"/>
+			</Extension>
+			  <Extension extender="spss.com">
+				    <Interval closure="closedClosed" leftMargin="63" rightMargin="98"/>
+			</Extension>
+			  <Apply function="outlierHandle">
+				    <FieldRef field="jobtime"/>
+				    <Constant dataType="string">asExtremeValues</Constant>
+				    <Constant dataType="double">81.1097046413502</Constant>
+				    <Constant dataType="double">10.0609448737135</Constant>
+				    <Constant dataType="double">3</Constant>
+				    <Constant dataType="double">1</Constant>
+			</Apply>
+		</DerivedField>  <DerivedField dataType="double" displayName="Previous Experience (months)" name="prevexp_transformed" optype="continuous">
+			  <Extension extender="spss.com">
+				    <Action parameter="3" reasonKey="OutlierTrim2ExtremeValue" stepKey="Outliers"/>
+				    <UsageType value="enable"/>
+				    <ClassOfField value="transformed feature"/>
+				    <SourceField value="prevexp"/>
+				    <PredictivePower value="0.00928077994009102"/>
+				    <HasMissingValues value="false"/>
+			</Extension>
+			  <Extension extender="spss.com">
+				    <Interval closure="closedClosed" leftMargin="0" rightMargin="374.744340087005"/>
+			</Extension>
+			  <Apply function="outlierHandle">
+				    <FieldRef field="prevexp"/>
+				    <Constant dataType="string">asExtremeValues</Constant>
+				    <Constant dataType="double">89.9055793991416</Constant>
+				    <Constant dataType="double">94.9462535626212</Constant>
+				    <Constant dataType="double">3</Constant>
+				    <Constant dataType="double">1</Constant>
+			</Apply>
+		</DerivedField></TransformationDictionary><MiningModel algorithmName="boosting" functionName="regression"><Extension extender="spss.com" name="modelID" value="22"/><MiningSchema><Extension extender="spss.com" name="DerivedFields">
+        <MiningField name="jobtime_transformed"/>
+        <MiningField name="prevexp_transformed"/>
+      </Extension><MiningField importance="0.784425250622475" name="jobcat"/><MiningField importance="0.0232197667023608" name="minority"/><MiningField importance="0.169563032142105" name="gender"/><MiningField name="salary" usageType="predicted"/><MiningField importance="0.0225768088641774" name="jobtime"/><MiningField importance="0.00021514166888254" name="prevexp"/></MiningSchema><ModelExplanation><PredictiveModelQuality dataUsage="training" meanSquaredError="109370115.954481" r-squared="0.624109974674109" targetField="salary"><LiftData><ModelLiftGraph><LiftGraph><XCoordinates><Array n="21" type="int">5 28 51 74 97 120 143 166 189 212 235 258 281 304 327 350 373 396 419 442 474</Array></XCoordinates><YCoordinates><Array n="21" type="real">477125 1524475 1379425 1496275 949035 716400 707010 778550 673625 692185 707040 702270 652050 657400 628650 534750 578700 554850 594060 558300 752700</Array></YCoordinates><BoundaryValues><Array n="21" type="real">77544.7270383462 74607.0265712795 70649.2803247843 63428.9414003649 41523.5528277483 39712.5906697778 37318.1556218907 35518.1836751277 34129.3096394008 32101.1499301545 31280.3504806412 29763.07521251 27997.4898764104 27384.5750445155 25990.1688042545 24669.9342805996 23932.3460143888 23308.0449044382 21801.6242164146 20346.6651517384 15420.2425983637</Array></BoundaryValues><BoundaryValueMeans><Array n="21" type="real">78163.831208541 75477.4823536944 72408.5089814487 66598.5141783012 49407.708919137 40586.7072447367 38392.7941461617 36477.0115581263 34715.0029059267 32885.8267814741 31633.0743132497 30691.0908345932 28782.4825394002 27661.2083323487 26591.0815493617 25329.2452843224 24336.3381777084 23683.5558060032 22433.8986227683 21135.7411917919 19367.5791527155</Array></BoundaryValueMeans></LiftGraph></ModelLiftGraph></LiftData></PredictiveModelQuality></ModelExplanation><Segmentation multipleModelMethod="selectAll">
+      <Extension extender="spss.com" name="multipleModelMethod" value="weightedMedian"/>
+      <Segment id="1" weight="2.37605">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="23"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="184.332812378326" meanOfSquares="16161847421.9422" pValue="0" sumOfSquares="96971084531.6533" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="87677539.4104633" sumOfSquares="40945410904.6863" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="137916495436.34" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="81.1097046413502" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="94.5383229985339" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">5 28 51 74 97 120 143 166 189 212 235 258 281 304 327 350 373 396 419 442 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">348625 1518625 1548600 1486150 918935 804150 833060 676500 685710 719760 706200 675400 620550 662250 598950 542850 602160 552000 575250 559350 679800</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">67184.3449513848 65836.2184357778 63925.5614130019 59391.370376457 34961.3857426168 33890.2771818629 33225.3514961801 32267.0062267233 31823.7639466089 31109.5459222274 30062.5283124217 28487.3499738703 27281.8957729265 26185.8909857893 25889.0735630304 25407.1691047647 24715.5698237626 24419.6891586638 23558.2931175876 22057.9789707 19164.5718717037</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">67331.810527252 66549.1906523681 64899.677382081 62856.0515482777 44610.7324301044 34449.4138095718 33468.4698420528 32802.4012274526 32014.5935720887 31402.736879219 30604.8459847967 29274.8150812864 27570.0164941022 26705.4738168899 26004.8349984961 25651.5081775397 25036.7986469233 24581.9003493188 23991.1625651263 22923.5455391519 21064.3143886328</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="54414.0655740464" df="1" parameterName="P0000001"/>
+			        <PCell beta="-32073.2326588122" df="1" parameterName="P0000002"/>
+			        <PCell beta="-30276.0570588768" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="2112.14568720342" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-7931.61169816012" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="117.860049774534" df="1" parameterName="P0000009"/>
+			        <PCell beta="-13.7659517680328" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="2" weight="1.5416">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="13"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="123.35952683017" meanOfSquares="30162243376.9611" pValue="0" sumOfSquares="180973460261.766" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="244506801.801257" sumOfSquares="114184676441.187" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="295158136702.953" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="81.3713080168776" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="89.9966682726119" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">13 47 70 93 125 143 159 187 211 232 251 277 302 321 341 366 387 408 429 450 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">1634000 2569225 1331450 1527775 1752880 609850 475200 1157390 994500 608010 561090 793530 671850 635550 514050 662100 489000 499950 494130 542400 557850</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">78310.8705782149 75018.7491947461 72014.4088140049 67050.6240979962 43133.2453499188 40792.9476553117 38817.913833237 36607.7316121942 35425.196345554 33687.6517905438 32101.1499301546 30563.7541015897 28189.3438782289 27502.1879576854 26160.2516137164 24364.8000317108 23646.6199922967 23105.1009409473 21701.0281122004 20119.1179277444 15420.2425983637</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">78609.3523764219 75989.2945432682 73900.4678418871 69893.4712776886 60652.1493643309 41340.6485922921 39740.2722798272 37450.0382550703 35955.4290791723 34537.4585215515 32775.1442110109 31465.1523092184 29041.8373161116 27803.0994197317 26892.9371750521 25389.2614239711 23910.4737493613 23470.1164426353 22262.3738327081 20781.1104815527 18528.1929347954</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="40704.0918777146" df="1" parameterName="P0000001"/>
+			        <PCell beta="-35296.8203183584" df="1" parameterName="P0000002"/>
+			        <PCell beta="-43915.3298908694" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="4708.21353599053" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-11922.5442819929" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="317.300372077844" df="1" parameterName="P0000009"/>
+			        <PCell beta="13.9298825430674" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="3" weight="0.866822">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="14"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="97.732385793194" meanOfSquares="39439331301.2146" pValue="0" sumOfSquares="236635987807.288" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="403544137.19798" sumOfSquares="188455112071.457" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="425091099878.745" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="82.3797468354431" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="96.5304235468736" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">31 65 90 114 139 158 176 194 225 245 264 286 313 333 351 370 388 409 433 449 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">3907125 2231250 1403150 1460575 1759225 651620 561300 494010 1552500 516000 615850 591300 979890 609990 491700 491700 532500 538800 606960 379350 644250</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">83513.4299183752 79652.1671783869 75422.0079602154 68523.6802783778 59736.1556556225 43566.275281054 41071.6329164781 38121.279851635 36364.2257532699 35003.406624943 33674.4504703881 31112.55126217 29875.9219434584 29355.6506814217 28053.8979030124 26340.2253294198 24801.8540310892 23758.666397682 22101.669150068 20526.0591572155 15905.7732513248</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">84932.4322025525 80777.0460068674 77361.2931192469 72795.1544845584 66176.1016352256 46699.866183989 42129.9380603511 39522.399728485 36733.4477805586 35317.3486989609 34342.367579585 31993.9415276979 30153.3175497813 29641.0339810862 28588.5280430111 27444.1091040518 25354.6230755492 24250.5975247001 22970.3190807062 21480.3746119842 17683.8049671615</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="31710.5489940243" df="1" parameterName="P0000001"/>
+			        <PCell beta="-38840.8745830829" df="1" parameterName="P0000002"/>
+			        <PCell beta="-46746.8936093461" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="5466.49990355693" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-11021.929011235" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="455.557182650442" df="1" parameterName="P0000009"/>
+			        <PCell beta="21.6907623862625" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="4" weight="0.362744">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="15"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="5" fValue="154.174732368167" meanOfSquares="89286223876.9372" pValue="0" sumOfSquares="446431119384.686" type="Model"/>
+					          <AnovaRow degreesOfFreedom="468" meanOfSquares="579123585.98245" sumOfSquares="271029838239.787" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="717460957624.472" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="83.3080168776372" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="100.763078187306" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">69 104 128 161 185 197 211 233 248 264 280 308 331 353 368 385 402 419 443 458 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">9202000 2425250 1352325 1956725 1613700 582175 421170 618200 442500 477000 531000 1499200 920900 611025 452400 483200 465450 435780 584970 436500 403800</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">99830.9103979156 87587.4593859262 82802.9117207763 73495.6149565422 66092.0237019746 55473.8394991448 51143.4636918906 48082.6621995419 44986.709376673 40202.1617115231 37305.5161011049 33162.0335513366 31332.6010060398 29921.4146830155 27161.7268923258 23929.0097514722 21484.5380108527 20917.7458598408 17192.509532345 10254.0459004738 4030.92034835397</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">102443.78488454 91227.1271781627 86023.096435004 77689.2995923376 69645.8365342902 60774.2019949607 53005.2173853674 49234.3633029994 46256.0259456086 42428.595843052 38727.4430105875 35364.4567962978 32401.3461574259 30559.4938604713 28677.4316683551 24846.5824390715 22622.2373466001 21184.736723951 18875.905790555 14524.0334165579 8196.42814498169</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[gender=f]" name="P0000005"/>
+			        <Parameter label="[gender=m]" name="P0000006"/>
+			        <Parameter label="jobtime_transformed" name="P0000007"/>
+			        <Parameter label="prevexp_transformed" name="P0000008"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000006" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000007" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000008" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="-2334.96580739835" df="1" parameterName="P0000001"/>
+			        <PCell beta="-41615.7116359688" df="1" parameterName="P0000002"/>
+			        <PCell beta="-61483.8906143136" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="-11790.7481778102" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="938.156972860381" df="1" parameterName="P0000007"/>
+			        <PCell beta="74.2729643696987" df="1" parameterName="P0000008"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="5" weight="0.115533">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="16"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="99.4442105025595" meanOfSquares="65368744899.9841" pValue="0" sumOfSquares="392212469399.903" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="657340880.576465" sumOfSquares="306978191229.209" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="699190660629.112" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="83.9071729957806" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="107.860663967713" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">65 98 137 171 194 221 237 251 269 307 321 336 353 365 379 391 405 417 432 446 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">8654000 2618375 2338700 1590750 1504175 1650050 510625 410010 550200 2313550 403050 612325 593970 330750 346800 345840 343800 330150 410900 315450 688500</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">96820.2171262184 88500.8184094283 83082.4035252397 75026.8987289318 64730.7711563666 55769.0836922912 51085.8316939765 46536.9032528738 43050.787008254 39973.1182966213 37768.5542853514 35169.0664333856 33305.3753287563 30944.169045615 27982.3397918491 25866.3269718076 23463.1584139776 22388.4647712405 18605.9058361864 16283.8601210129 8425.2332858848</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">97740.367272249 92018.9601310273 85784.4597931684 78898.3055647469 70621.5349856806 60627.4418226906 53086.7342268166 48455.6694196796 44674.9240250312 40609.610244038 38730.6063457119 36547.5356469948 34278.6745813595 32056.2655465526 29375.1838539684 26954.2892763975 24013.9612212489 22743.0838229911 21070.6821978433 17396.8152847631 12374.3076266572</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="-3651.73236504146" df="1" parameterName="P0000001"/>
+			        <PCell beta="-38634.7504249903" df="1" parameterName="P0000002"/>
+			        <PCell beta="-55633.5056581967" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="6596.85018050112" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-14467.8242457803" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="906.47916579567" df="1" parameterName="P0000009"/>
+			        <PCell beta="39.1605679678541" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="6" weight="0.071867">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="17"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="5" fValue="102.673624167643" meanOfSquares="68480563025.7598" pValue="0" sumOfSquares="342402815128.799" type="Model"/>
+					          <AnovaRow degreesOfFreedom="468" meanOfSquares="666973271.674394" sumOfSquares="312143491143.616" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="654546306272.416" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="84.1413502109704" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="107.865374980922" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">58 97 131 168 201 222 237 254 268 284 318 335 355 370 386 407 420 431 445 459 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">7734500 2686700 1886925 2368900 2468500 988075 522160 506150 406110 456750 1989950 514650 862475 405150 471780 741450 308400 291600 305700 380010 425850</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">93202.6608188388 84536.2542193873 81188.3171893896 75329.7869640959 68091.5559273116 57841.3815086675 49629.7406361504 47502.3528083689 44763.340358457 41332.8120484687 38495.1846418726 36542.3412334414 33998.7023815077 30251.0963017432 27762.5577338476 25910.6269016139 23090.6886260426 20748.60889939 18991.7336710917 15469.2522217437 9012.82473006438</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">94491.6541013638 87337.2442670287 83497.978489306 78933.6798997418 72756.5336287087 62658.4413657234 51257.4929638034 48581.8605830431 46003.7452152057 43069.2456843969 39228.6235071676 37211.6294270127 35591.465385157 31137.4702742351 29024.4935726483 26777.9236492659 24516.9560933717 21793.634650173 19583.6738858929 16584.6129976303 12942.3241445825</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[gender=f]" name="P0000005"/>
+			        <Parameter label="[gender=m]" name="P0000006"/>
+			        <Parameter label="jobtime_transformed" name="P0000007"/>
+			        <Parameter label="prevexp_transformed" name="P0000008"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000006" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000007" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000008" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="27031.3004236522" df="1" parameterName="P0000001"/>
+			        <PCell beta="-38785.7802763233" df="1" parameterName="P0000002"/>
+			        <PCell beta="-57133.1650651254" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="-16905.9009991187" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="590.200861347685" df="1" parameterName="P0000007"/>
+			        <PCell beta="54.5057018833424" df="1" parameterName="P0000008"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="7" weight="0.1432">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="18"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="5" fValue="101.619162477244" meanOfSquares="67016621847.586" pValue="0" sumOfSquares="335083109237.93" type="Model"/>
+					          <AnovaRow degreesOfFreedom="468" meanOfSquares="659488035.660529" sumOfSquares="308640400689.128" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="643723509927.057" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="84.0654008438819" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="98.5695247272069" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">59 98 128 162 184 215 230 244 260 280 293 337 353 367 381 401 415 431 446 461 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">7817000 2800900 1686225 2141550 1204525 2071450 505700 461150 549470 660850 433650 2831125 438810 407750 395100 699150 330900 412500 372000 448260 335100</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">94088.3007729151 83978.6334434366 81033.1172318801 76734.4574477461 70908.3150352996 60976.1876463019 54346.2914808149 51226.1159028678 48607.9681098813 45195.6850111379 42459.6533880277 38684.8563380029 35123.8029933895 32966.8639433341 29369.6068337902 28287.261089109 24030.5622847954 20025.629359404 17921.3696931092 13755.6490906169 8141.90963185365</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">95536.9258527762 87940.1313389195 82750.6215795093 78506.7968215327 73181.818301484 66912.7430357077 55962.7305421249 52807.3023894147 49530.9261154861 46371.7156696721 43410.2620231353 40542.4746223469 36486.2780373059 33661.453110268 31314.4032499063 28749.1568915084 26150.5294830841 21415.0977289025 18996.9584114447 16736.002882628 10825.6071227875</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[gender=f]" name="P0000005"/>
+			        <Parameter label="[gender=m]" name="P0000006"/>
+			        <Parameter label="jobtime_transformed" name="P0000007"/>
+			        <Parameter label="prevexp_transformed" name="P0000008"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000006" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000007" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000008" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="17884.2805785055" df="1" parameterName="P0000001"/>
+			        <PCell beta="-34658.9480145553" df="1" parameterName="P0000002"/>
+			        <PCell beta="-55914.7286320636" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="-18361.6030379842" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="677.870813579436" df="1" parameterName="P0000007"/>
+			        <PCell beta="63.590983375907" df="1" parameterName="P0000008"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="8" weight="0.092046">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="19"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="93.8672731602876" meanOfSquares="61836244298.4605" pValue="0" sumOfSquares="371017465790.763" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="658762550.744059" sumOfSquares="307642111197.476" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="678659576988.238" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="83.9746835443038" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="105.32479898881" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">68 98 114 140 168 197 218 233 248 263 283 324 336 352 378 392 408 423 436 448 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">9012500 1960650 977500 1250375 1618600 2091500 698300 425700 414600 449550 544800 2612025 343225 509100 1001250 365790 433650 511350 338550 322050 670500</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">94771.6909871859 88573.2995828848 86271.0056561214 79782.7788158481 68696.4034076246 57382.1601525047 52248.9756023094 48980.2028420001 46513.8740277244 43959.8436099956 40814.4089901585 37548.2340318825 34191.4351736847 30917.8879628602 30229.0072023531 28273.2396444558 26235.2440660267 21801.0009907898 20536.8026553023 16857.0329670306 7657.91797442846</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">97884.8164000127 90245.1594240488 87559.9074769796 82633.5994191522 76457.8875122805 66383.7148729178 53560.7955455844 50590.0920601073 47959.2652508177 45220.0851769989 42554.1049945455 40066.7123096597 36050.9219149491 32176.1645001177 30552.5433681179 29360.0319754434 27114.6089013796 24226.9677436703 21207.7487617843 18246.229510164 13569.09041214</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="15346.762650992" df="1" parameterName="P0000001"/>
+			        <PCell beta="-40314.8868415783" df="1" parameterName="P0000002"/>
+			        <PCell beta="-57843.7084833223" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="5496.43697300448" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-16975.4124209397" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="717.015650178299" df="1" parameterName="P0000009"/>
+			        <PCell beta="42.4582412172724" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+      <Segment id="9" weight="0.0300502">
+        <True/>
+        <GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary">
+          <Extension extender="spss.com" name="modelID" value="21"/>
+          <MiningSchema>
+            <Extension extender="spss.com" name="DerivedFields">
+              <MiningField name="jobtime_transformed"/>
+              <MiningField name="prevexp_transformed"/>
+            </Extension>
+			        <MiningField name="jobcat"/>
+			        <MiningField name="minority"/>
+			        <MiningField name="gender"/>
+			
+			
+			        <MiningField name="salary" usageType="predicted"/>
+		          <MiningField name="jobtime"/>
+            <MiningField name="prevexp"/>
+          </MiningSchema>
+          <ModelStats>
+			        <UnivariateStats field="salary">
+				          <Anova>
+					          <AnovaRow degreesOfFreedom="6" fValue="96.7602121428063" meanOfSquares="68145953094.1105" pValue="0" sumOfSquares="408875718564.663" type="Model"/>
+					          <AnovaRow degreesOfFreedom="467" meanOfSquares="704276598.665735" sumOfSquares="328897171576.898" type="Error"/>
+					          <AnovaRow degreesOfFreedom="473" sumOfSquares="737772890141.561" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			        <UnivariateStats field="jobtime_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="98" mean="83.7784810126583" minimum="63"/>
+				          <ContStats/>
+			</UnivariateStats>
+			        <UnivariateStats field="prevexp_transformed">
+				          <Counts totalFreq="474"/>
+				          <NumericInfo maximum="374.744340087005" mean="117.615351099433" minimum="0"/>
+				          <ContStats/>
+			</UnivariateStats>
+		</ModelStats>        <ModelExplanation>
+			        <PredictiveModelQuality targetField="salary">
+				          <LiftData>
+					          <ModelLiftGraph>
+						            <LiftGraph>
+							            <XCoordinates>
+								              <Array n="21" type="int">75 104 128 168 196 228 244 261 273 286 320 336 354 368 383 394 406 417 428 440 474</Array>
+							</XCoordinates>
+							            <YCoordinates>
+								              <Array n="21" type="real">9926000 2024300 1383325 1843675 2199600 2193575 486325 460710 343590 443400 1918100 683700 589350 365550 523650 330450 316350 326300 273750 306810 801900</Array>
+							</YCoordinates>
+							            <BoundaryValues>
+								              <Array n="21" type="real">97872.4287091925 89581.5007203818 85079.330633768 78208.4285970824 67587.1158598163 62499.4372683777 51536.6685519153 49154.0550374353 44405.3059985733 42663.7345530786 39370.3146461402 37261.9120397167 34812.4132987031 31182.7480163998 29663.5974328391 26578.6835615992 23330.2885459019 20352.7648085997 19309.1272940104 16061.7060596 7100.9236918202</Array>
+							</BoundaryValues>
+							            <BoundaryValueMeans>
+								              <Array n="21" type="real">98826.8603208215 92633.8168434883 87126.8658880091 81333.8781069913 75601.49257812 65035.0950232891 55058.7026635785 49936.8323862745 45946.7145595642 43435.5767603322 40907.6268563248 38310.9783370269 35505.9300952465 32996.9506102679 30514.0563101137 28324.0090030246 25093.2330335317 21575.3356676574 19852.9781519166 17421.3711309223 12167.6741391277</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation>        <ParameterList>
+			        <Parameter label="Intercept" name="P0000001"/>
+			        <Parameter label="[jobcat=1]" name="P0000002"/>
+			        <Parameter label="[jobcat=2]" name="P0000003"/>
+			        <Parameter label="[jobcat=3]" name="P0000004"/>
+			        <Parameter label="[minority=0]" name="P0000005"/>
+			        <Parameter label="[minority=1]" name="P0000006"/>
+			        <Parameter label="[gender=f]" name="P0000007"/>
+			        <Parameter label="[gender=m]" name="P0000008"/>
+			        <Parameter label="jobtime_transformed" name="P0000009"/>
+			        <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList>        <FactorList>
+			        <Predictor name="jobcat"/>
+			        <Predictor name="minority"/>
+			        <Predictor name="gender"/>
+		</FactorList>        <CovariateList>
+			        <Predictor name="jobtime_transformed"/>
+			        <Predictor name="prevexp_transformed"/>
+		</CovariateList>        <PPMatrix>
+			        <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			        <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			        <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			        <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			        <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			        <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			        <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			        <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			        <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix>        <ParamMatrix>
+			        <PCell beta="1891.76701896658" df="1" parameterName="P0000001"/>
+			        <PCell beta="-39326.9386914115" df="1" parameterName="P0000002"/>
+			        <PCell beta="-54451.2854463471" df="1" parameterName="P0000003"/>
+			        <PCell beta="0" df="0" parameterName="P0000004"/>
+			        <PCell beta="8281.97386694132" df="1" parameterName="P0000005"/>
+			        <PCell beta="0" df="0" parameterName="P0000006"/>
+			        <PCell beta="-18647.6746547939" df="1" parameterName="P0000007"/>
+			        <PCell beta="0" df="0" parameterName="P0000008"/>
+			        <PCell beta="838.874996928849" df="1" parameterName="P0000009"/>
+			        <PCell beta="40.9525035320863" df="1" parameterName="P0000010"/>
+		</ParamMatrix>      </GeneralRegressionModel>
+      </Segment>
+    </Segmentation></MiningModel><GeneralRegressionModel algorithmName="ALM" functionName="regression" modelName="CSGLM" modelType="generalLinear" targetVariableName="salary"><Extension extender="spss.com" name="modelID" value="12"/><MiningSchema><Extension extender="spss.com" name="DerivedFields">
+        <MiningField name="jobtime_transformed"/>
+        <MiningField name="prevexp_transformed"/>
+      </Extension><MiningField importance="0.8534543561682" name="jobcat"/><MiningField importance="0.0178580282470914" name="minority"/><MiningField importance="0.117463925682459" name="gender"/><MiningField name="salary" usageType="predicted"/><MiningField importance="0.00500354586335017" name="jobtime"/><MiningField importance="0.00622014403890008" name="prevexp"/></MiningSchema><ModelStats>
+			  <UnivariateStats field="salary">
+				    <Anova>
+					    <AnovaRow degreesOfFreedom="6" fValue="184.332812378326" meanOfSquares="16161847421.9422" pValue="0" sumOfSquares="96971084531.6533" type="Model"/>
+					    <AnovaRow degreesOfFreedom="467" meanOfSquares="87677539.4104633" sumOfSquares="40945410904.6863" type="Error"/>
+					    <AnovaRow degreesOfFreedom="473" sumOfSquares="137916495436.34" type="Total"/>
+				</Anova>
+			</UnivariateStats>
+			  <UnivariateStats field="jobtime_transformed">
+				    <Counts totalFreq="474"/>
+				    <NumericInfo maximum="98" mean="81.1097046413502" minimum="63"/>
+				    <ContStats/>
+			</UnivariateStats>
+			  <UnivariateStats field="prevexp_transformed">
+				    <Counts totalFreq="474"/>
+				    <NumericInfo maximum="374.744340087005" mean="94.5383229985339" minimum="0"/>
+				    <ContStats/>
+			</UnivariateStats>
+		</ModelStats><ModelExplanation>
+			  <PredictiveModelQuality targetField="salary">
+				    <LiftData>
+					    <ModelLiftGraph>
+						      <LiftGraph>
+							      <XCoordinates>
+								        <Array n="21" type="int">5 28 51 74 97 120 143 166 189 212 235 258 281 304 327 350 373 396 419 442 474</Array>
+							</XCoordinates>
+							      <YCoordinates>
+								        <Array n="21" type="real">348625 1518625 1548600 1486150 918935 804150 833060 676500 685710 719760 706200 675400 620550 662250 598950 542850 602160 552000 575250 559350 679800</Array>
+							</YCoordinates>
+							      <BoundaryValues>
+								        <Array n="21" type="real">67184.3449513848 65836.2184357778 63925.5614130019 59391.370376457 34961.3857426168 33890.2771818629 33225.3514961801 32267.0062267233 31823.7639466089 31109.5459222274 30062.5283124217 28487.3499738703 27281.8957729265 26185.8909857893 25889.0735630304 25407.1691047647 24715.5698237626 24419.6891586638 23558.2931175876 22057.9789707 19164.5718717037</Array>
+							</BoundaryValues>
+							      <BoundaryValueMeans>
+								        <Array n="21" type="real">67331.810527252 66549.1906523681 64899.677382081 62856.0515482777 44610.7324301044 34449.4138095718 33468.4698420528 32802.4012274526 32014.5935720887 31402.736879219 30604.8459847967 29274.8150812864 27570.0164941022 26705.4738168899 26004.8349984961 25651.5081775397 25036.7986469233 24581.9003493188 23991.1625651263 22923.5455391519 21064.3143886328</Array>
+							</BoundaryValueMeans>
+						</LiftGraph>
+					</ModelLiftGraph>
+				</LiftData>
+			</PredictiveModelQuality>
+		</ModelExplanation><ModelExplanation><PredictiveModelQuality dataUsage="training" meanSquaredError="86382723.4276083" r-squared="0.703114476806103" targetField="salary"><LiftData><ModelLiftGraph><LiftGraph><XCoordinates><Array n="21" type="int">5 28 51 74 97 120 143 166 189 212 235 258 281 304 327 350 373 396 419 442 474</Array></XCoordinates><YCoordinates><Array n="21" type="real">348625 1518625 1548600 1486150 918935 804150 833060 676500 685710 719760 706200 675400 620550 662250 598950 542850 602160 552000 575250 559350 679800</Array></YCoordinates><BoundaryValues><Array n="21" type="real">67184.3449513848 65836.2184357778 63925.5614130019 59391.370376457 34961.3857426167 33890.2771818629 33225.35149618 32267.0062267232 31823.7639466088 31109.5459222274 30062.5283124217 28487.3499738703 27281.8957729264 26185.8909857893 25889.0735630303 25407.1691047646 24715.5698237625 24419.6891586638 23558.2931175875 22057.9789706999 19164.5718717036</Array></BoundaryValues><BoundaryValueMeans><Array n="21" type="real">67331.810527252 66549.1906523681 64899.6773820809 62856.0515482777 44610.7324301044 34449.4138095718 33468.4698420528 32802.4012274526 32014.5935720887 31402.736879219 30604.8459847966 29274.8150812864 27570.0164941021 26705.4738168899 26004.8349984961 25651.5081775397 25036.7986469233 24581.9003493188 23991.1625651262 22923.5455391518 21064.3143886327</Array></BoundaryValueMeans></LiftGraph></ModelLiftGraph></LiftData></PredictiveModelQuality></ModelExplanation><ParameterList>
+			  <Parameter label="Intercept" name="P0000001"/>
+			  <Parameter label="[jobcat=1]" name="P0000002"/>
+			  <Parameter label="[jobcat=2]" name="P0000003"/>
+			  <Parameter label="[jobcat=3]" name="P0000004"/>
+			  <Parameter label="[minority=0]" name="P0000005"/>
+			  <Parameter label="[minority=1]" name="P0000006"/>
+			  <Parameter label="[gender=f]" name="P0000007"/>
+			  <Parameter label="[gender=m]" name="P0000008"/>
+			  <Parameter label="jobtime_transformed" name="P0000009"/>
+			  <Parameter label="prevexp_transformed" name="P0000010"/>
+		</ParameterList><FactorList>
+			  <Predictor name="jobcat"/>
+			  <Predictor name="minority"/>
+			  <Predictor name="gender"/>
+		</FactorList><CovariateList>
+			  <Predictor name="jobtime_transformed"/>
+			  <Predictor name="prevexp_transformed"/>
+		</CovariateList><PPMatrix>
+			  <PPCell parameterName="P0000002" predictorName="jobcat" value="1"/>
+			  <PPCell parameterName="P0000003" predictorName="jobcat" value="2"/>
+			  <PPCell parameterName="P0000004" predictorName="jobcat" value="3"/>
+			  <PPCell parameterName="P0000005" predictorName="minority" value="0"/>
+			  <PPCell parameterName="P0000006" predictorName="minority" value="1"/>
+			  <PPCell parameterName="P0000007" predictorName="gender" value="f"/>
+			  <PPCell parameterName="P0000008" predictorName="gender" value="m"/>
+			  <PPCell parameterName="P0000009" predictorName="jobtime_transformed" value="1"/>
+			  <PPCell parameterName="P0000010" predictorName="prevexp_transformed" value="1"/>
+		</PPMatrix><ParamMatrix>
+			  <PCell beta="54414.0655740464" df="1" parameterName="P0000001"/>
+			  <PCell beta="-32073.2326588122" df="1" parameterName="P0000002"/>
+			  <PCell beta="-30276.0570588768" df="1" parameterName="P0000003"/>
+			  <PCell beta="0" df="0" parameterName="P0000004"/>
+			  <PCell beta="2112.14568720342" df="1" parameterName="P0000005"/>
+			  <PCell beta="0" df="0" parameterName="P0000006"/>
+			  <PCell beta="-7931.61169816012" df="1" parameterName="P0000007"/>
+			  <PCell beta="0" df="0" parameterName="P0000008"/>
+			  <PCell beta="117.860049774534" df="1" parameterName="P0000009"/>
+			  <PCell beta="-13.7659517680328" df="1" parameterName="P0000010"/>
+		</ParamMatrix></GeneralRegressionModel><Extension extender="spss.com" name="activeModelID" value="12"/></PMML>

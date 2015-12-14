@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PMML 
+	 version="4.0"
+	 xmlns="http://www.dmg.org/PMML-4_0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.dmg.org/PMML-4_0 pmml-4-0.xsd">
+	<Header 
+		 copyright="Copyright (c) IBM Corp. 1999, 2011.">
+		<Application  name="IBM SPSS Statistics"  version="21.0.0.0" />
+	</Header>
+	<DataDictionary 
+		 numberOfFields="4">
+		<DataField 
+			 name="salary"
+			 displayName="Current Salary"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="4" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="salbegin"
+			 displayName="Beginning Salary"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="4" />
+			<Extension  extender="spss.com"  name="width"  value="8" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="missing"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="educ"
+			 displayName="Educational Level (years)"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="2" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+			<Value  value="0"  displayValue="0 (Missing)"  property="missing" />
+		</DataField>
+		<DataField 
+			 name="prevexp"
+			 displayName="Previous Experience (months)"
+			 optype="continuous"
+			 dataType="double">
+			<Extension  extender="spss.com"  name="format"  value="5" />
+			<Extension  extender="spss.com"  name="width"  value="6" />
+			<Extension  extender="spss.com"  name="decimals"  value="0" />
+		</DataField>
+	</DataDictionary>
+	<GeneralRegressionModel 
+		 targetVariableName="salary"
+		 modelType="regression"
+		 functionName="regression">
+		<Extension  extender="spss.com"  name="numberParameters"  value="4" />
+		<Extension  extender="spss.com"  name="modelDF"  value="470" />
+		<MiningSchema >
+			<MiningField  name="salary"  usageType="predicted" />
+			<MiningField  name="salbegin"  usageType="active" />
+			<MiningField  name="educ"  usageType="active" />
+			<MiningField  name="prevexp"  usageType="active" />
+		</MiningSchema>
+		<ParameterList >
+			<Parameter  name="(Constant)"  label="(Constant)" />
+			<Parameter  name="salbegin"  label="Beginning Salary" />
+			<Parameter  name="educ"  label="Educational Level (years)" />
+			<Parameter  name="prevexp"  label="Previous Experience (months)" />
+		</ParameterList>
+		<CovariateList >
+			<Predictor  name="salbegin" />
+			<Predictor  name="educ" />
+			<Predictor  name="prevexp" />
+		</CovariateList>
+		<PPMatrix >
+			<PPCell  value="1"  predictorName="salbegin"  parameterName="salbegin" />
+			<PPCell  value="1"  predictorName="educ"  parameterName="educ" />
+			<PPCell  value="1"  predictorName="prevexp"  parameterName="prevexp" />
+		</PPMatrix>
+		<PCovMatrix >
+			<PCovCell  pRow="(Constant)"  pCol="(Constant)"  value="3746123.14970325" />
+			<PCovCell  pRow="salbegin"  pCol="salbegin"  value="0.00358681808207261" />
+			<PCovCell  pRow="salbegin"  pCol="(Constant)"  value="35.5194920658286" />
+			<PCovCell  pRow="educ"  pCol="salbegin"  value="-6.73680263747078" />
+			<PCovCell  pRow="educ"  pCol="educ"  value="28456.0573243277" />
+			<PCovCell  pRow="educ"  pCol="(Constant)"  value="-290463.840374341" />
+			<PCovCell  pRow="prevexp"  pCol="salbegin"  value="-0.0590764550771169" />
+			<PCovCell  pRow="prevexp"  pCol="educ"  value="220.958174242099" />
+			<PCovCell  pRow="prevexp"  pCol="prevexp"  value="12.9965895669014" />
+			<PCovCell  pRow="prevexp"  pCol="(Constant)"  value="-3221.6836034551" />
+		</PCovMatrix>
+		<ParamMatrix >
+			<PCell  parameterName="(Constant)"  beta="-3661.51707695996" />
+			<PCell  parameterName="salbegin"  beta="1.74867824464094" />
+			<PCell  parameterName="educ"  beta="735.955912095901" />
+			<PCell  parameterName="prevexp"  beta="-16.730202260363" />
+		</ParamMatrix>
+	</GeneralRegressionModel>
+</PMML>

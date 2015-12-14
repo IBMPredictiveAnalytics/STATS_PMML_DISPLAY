@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<spss-ml 
+	 version="1.0"
+	 xmlns="http://xml.spss.com/spss/spss-ml"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xml.spss.com/spss/spss-ml spss-ml-1.0.xsd">
+	<dictionary 
+		 version="1.0">
+		<variable 
+			 name="default"
+			 label="Previously defaulted"
+			 measurement-level="NOMINAL"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="4"  decimals="0" />
+		</variable>
+		<variable 
+			 name="employ"
+			 label="Years with current employer"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="4"  decimals="0" />
+			<var-stats  mean="8.38857173919678" />
+		</variable>
+		<variable 
+			 name="address"
+			 label="Years at current address"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="4"  decimals="0" />
+			<var-stats  mean="8.27857112884521" />
+		</variable>
+		<variable 
+			 name="income"
+			 label="Household income in thousands"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="8"  decimals="2" />
+			<var-stats  mean="45.6014289855957" />
+		</variable>
+		<variable 
+			 name="debtinc"
+			 label="Debt to income ratio (x100)"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="8"  decimals="2" />
+			<var-stats  mean="10.2605714797974" />
+		</variable>
+		<variable 
+			 name="creddebt"
+			 label="Credit card debt in thousands"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="8"  decimals="2" />
+			<var-stats  mean="1.55355286598206" />
+		</variable>
+	</dictionary>
+	<model 
+		 unique-id=""
+		 verbose-model-specification="">
+		<discriminant-model 
+			 target-variable-name="default"
+			 number-functions="1">
+			<function-coefficients >
+				<cell  row="employ"  column="1"  value="-0.12633720182835" />
+				<cell  row="address"  column="1"  value="-0.0383777234776138" />
+				<cell  row="income"  column="1"  value="0.00337844800624929" />
+				<cell  row="debtinc"  column="1"  value="0.0800347590997246" />
+				<cell  row="creddebt"  column="1"  value="0.279253974443103" />
+				<cell  column="1"  value="-0.0315988499465715" />
+			</function-coefficients>
+			<fgc-matrix >
+				<cell  row="0"  column="1"  value="-0.374458362364517" />
+				<cell  row="1"  column="1"  value="1.05789602919375" />
+			</fgc-matrix>
+			<prior-vector >
+				<prior-value  target-category="0"  value="0.5" />
+				<prior-value  target-category="1"  value="0.5" />
+			</prior-vector>
+		</discriminant-model>
+	</model>
+</spss-ml>

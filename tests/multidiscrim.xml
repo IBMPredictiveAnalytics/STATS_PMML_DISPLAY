@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<spss-ml 
+	 version="1.0"
+	 xmlns="http://xml.spss.com/spss/spss-ml"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xml.spss.com/spss/spss-ml spss-ml-1.0.xsd">
+	<dictionary 
+		 version="1.0">
+		<variable 
+			 name="jobcat"
+			 label="Employment Category"
+			 measurement-level="ORDINAL"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="1"  decimals="0" />
+			<missing-values >
+				<category  value="0"  display-value="0 (Missing)" />
+			</missing-values>
+		</variable>
+		<variable 
+			 name="jobtime"
+			 label="Months since Hire"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="2"  decimals="0" />
+			<var-stats  mean="81.1097030639648" />
+			<missing-values >
+				<category  value="0"  display-value="missing" />
+			</missing-values>
+		</variable>
+		<variable 
+			 name="prevexp"
+			 label="Previous Experience (months)"
+			 measurement-level="CONTINUOUS"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="6"  decimals="0" />
+			<var-stats  mean="95.8607559204102" />
+		</variable>
+		<variable 
+			 name="educ"
+			 label="Educational Level (years)"
+			 measurement-level="ORDINAL"
+			 storage-type="NUMERIC">
+			<format-spec  format="5"  width="2"  decimals="0" />
+			<var-stats  mean="13.4915609359741" />
+			<missing-values >
+				<category  value="0"  display-value="0 (Missing)" />
+			</missing-values>
+		</variable>
+	</dictionary>
+	<model 
+		 unique-id=""
+		 verbose-model-specification="">
+		<discriminant-model 
+			 target-variable-name="jobcat"
+			 number-functions="2">
+			<function-coefficients >
+				<cell  row="jobtime"  column="1"  value="-0.00632183493472575" />
+				<cell  row="jobtime"  column="2"  value="0.000128996006882395" />
+				<cell  row="prevexp"  column="1"  value="-0.00257446590324628" />
+				<cell  row="prevexp"  column="2"  value="0.0106719879707112" />
+				<cell  row="educ"  column="1"  value="0.423160263229782" />
+				<cell  row="educ"  column="2"  value="0.173789031803246" />
+				<cell  column="1"  value="-4.94954015979385" />
+				<cell  column="2"  value="-3.37817305543363" />
+			</function-coefficients>
+			<fgc-matrix >
+				<cell  row="1"  column="1"  value="-0.235827308678623" />
+				<cell  row="1"  column="2"  value="-0.223908235281071" />
+				<cell  row="2"  column="1"  value="-1.92263216695331" />
+				<cell  row="2"  column="2"  value="1.58385894935536" />
+				<cell  row="3"  column="1"  value="1.63709978045333" />
+				<cell  row="3"  column="2"  value="0.458505925886119" />
+			</fgc-matrix>
+			<prior-vector >
+				<prior-value  target-category="1"  value="0.765822785595472" />
+				<prior-value  target-category="2"  value="0.0569620238122485" />
+				<prior-value  target-category="3"  value="0.17721519059228" />
+			</prior-vector>
+		</discriminant-model>
+	</model>
+</spss-ml>
