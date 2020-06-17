@@ -3,7 +3,7 @@
 # *
 # * IBM SPSS Products: Statistics Common
 # *
-# * (C) Copyright IBM Corp. 2014
+# * (C) Copyright IBM Corp. 1989, 2020
 # *
 # * US Government Users Restricted Rights - Use, duplication or disclosure
 # * restricted by GSA ADP Schedule Contract with IBM Corp. 
@@ -55,7 +55,7 @@ class Printer(object):
     
     def printHeader(self):
         self.text.addtext("Model: %s" % re.sub(r"{.*}", "", self.tree.tag))
-        for k,v in self.tree.attrib.items():
+        for k,v in list(self.tree.attrib.items()):
             self.text.addtext("%s: %s" % (k, v))
         self.text.addtext( _("""Details"""))
 
@@ -155,7 +155,7 @@ class RuleSetModel(Printer):
         ruleselection = rules.find("./" + ns + 'RuleSelectionMethod')
         if ruleselection is not None:
             self.text.addtext(_("""Rule Selection Method"""))
-            for k, v in ruleselection.attrib.items():
+            for k, v in list(ruleselection.attrib.items()):
                 self.text.addtext("%s: %s" % ( k, v))
         for rule in rules.iter():
             if rule.tag.endswith("SimpleRule"):
@@ -198,7 +198,7 @@ class NeuralNetwork(Printer):
         super(NeuralNetwork, self).__init__(tree, text)
         self.printHeader()
         for item in self.tree.iterfind(".//" + ns + "NeuralLayer"):
-            for k,v in item.attrib.items():
+            for k,v in list(item.attrib.items()):
                 self.text.addtext("%s: %s" % (k,  v))
         
 
@@ -292,7 +292,7 @@ def doHeader(chtag, ch):
     for cccc in ccc:
         if cccc.tag.endswith("Application"):
             d = cccc.attrib
-            print _("""Application: %s, Version: %s""") % (d["name"], d["version"])
+            print(_("""Application: %s, Version: %s""") % (d["name"], d["version"]))
             break
 
 def displayTransformations(ch, text):
@@ -317,11 +317,11 @@ def displayTransformations(ch, text):
             
 def displayMining(ch, text):
     text.addtext(_("***** Mining Model"""))
-    for k, v in ch.attrib.items():
+    for k, v in list(ch.attrib.items()):
         text.addtext("""%s : %s""" % (k, v))
     for segment in ch.iterfind(".//" + ns + "Segment"):
         text.addtext(_("""Segment"""))
-        text.addtext(" ".join(["""%s : %s""" % (k,v) for k, v in segment.attrib.items()]))
+        text.addtext(" ".join(["""%s : %s""" % (k,v) for k, v in list(segment.attrib.items())]))
         for item in segment.iterfind("./"):
             itemtag = re.sub(r"""\{.*\}""", "", item.tag)
             if itemtag in prints:
@@ -356,7 +356,7 @@ class Text(object):
 def Run(args):
     """Execute the STATS PMML DISPLAY extension command"""
 
-    args = args[args.keys()[0]]
+    args = args[list(args.keys())[0]]
 
     oobj = Syntax([
         Template("FILES", subc="",  ktype="literal", var="files", islist=False),
@@ -371,7 +371,7 @@ def Run(args):
         def _(msg):
             return msg
     # A HELP subcommand overrides all else
-    if args.has_key("HELP"):
+    if "HELP" in args:
         #print helptext
         helper()
     else:
@@ -391,7 +391,7 @@ def helper():
     # webbrowser.open seems not to work well
     browser = webbrowser.get()
     if not browser.open_new(helpspec):
-        print("Help file not found:" + helpspec)
+        print(("Help file not found:" + helpspec))
 try:    #override
     from extension import helper
 except:
