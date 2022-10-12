@@ -1,11 +1,11 @@
 # STATS PMML DISPLAY
 ## Display summary information for PMML files
- This command reads a set of PMML files and for each one displays a summary of the model it contains.
+ This command reads a set of PMML files and for each one d
 
 ---
 Requirements
 ----
-- IBM SPSS Statistics 20 or later and the corresponding IBM SPSS Statistics-Integration Plug-in for Python.
+- IBM SPSS Statistics 18 or later
 
 ---
 Installation intructions

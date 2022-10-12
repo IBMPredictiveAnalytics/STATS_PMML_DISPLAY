@@ -16,6 +16,7 @@ __version__=  '1.0.1'
 
 # history
 # 16-may-2012 original version
+# 11-oct-2022 replace getchildren api, which was removed in Python 3.9
 
 
 helptext = """STATS PMML DISPLAY FILES="file-expression"
@@ -44,7 +45,15 @@ from spssaux import FileHandles
 import glob, os, os.path, re, time, textwrap, sys
 from xml.etree import ElementTree
 
-
+# debugging
+        # makes debug apply only to the current thread
+#try:
+    #import wingdbstub
+    #import threading
+    #wingdbstub.Ensure()
+    #wingdbstub.debugger.SetDebugThreads({threading.get_ident(): 1})
+#except:
+    #pass
 
 # display functions - the parameter for each is the model element
 class Printer(object):
@@ -254,7 +263,8 @@ def dopmml(files):
                 ftime = time.ctime(os.stat(f).st_mtime)
                 text.title = _("""Summary Information: %s""") % f
                 text.addtext( _("""Summary Model Information for File: %s\nmodified: %s\n""") % (f, ftime))
-                for ch in root.getchildren():
+                ###for ch in root.getchildren():
+                for ch in list(root):
                     if first:
                         first = False
                         # find the namespace - there ought to be a better way :-)
@@ -288,7 +298,8 @@ def dopmml(files):
         raise ValueError( _("""No files were found to process.  File Specification: %s""") % files)
 
 def doHeader(chtag, ch):
-    ccc = ch.getchildren()
+    ###ccc = ch.getchildren()
+    ccc = list(ch)
     for cccc in ccc:
         if cccc.tag.endswith("Application"):
             d = cccc.attrib
