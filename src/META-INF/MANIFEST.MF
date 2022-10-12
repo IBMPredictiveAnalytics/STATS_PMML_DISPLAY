@@ -2,16 +2,17 @@ Name: STATS PMML DISPLAY
 Dialog-Specs: STATS_PMML_DISPLAY.spd
 Command-Specs: STATS_PMML_DISPLAY.xml
 Code-Files: STATS_PMML_DISPLAY.py
-Misc-Files: extsyntax.css,Readme.md,IBMdialogicon.png,LICENSE,markdown
- .html,default.png
+Misc-Files: extsyntax.css,Readme.md,IBMdialogicon.png,LICENSE,default.
+ png,markdown.html
 Summary: Display summary information for PMML files
 Description: This command reads a set of PMML files and for each one d
  isplays a summary of the model it contains.
 Author: JKP, IBM SPSS
-Version: 2.0.3
+Version: 2.0.4
 Product-Version: 24
 Date: 9/2013
 Product-Version-Maximum: 99
 Categories: PMML, model, utility
 Plugins: Python
 Python-Version: 3
+Translation-Catalogues: 
