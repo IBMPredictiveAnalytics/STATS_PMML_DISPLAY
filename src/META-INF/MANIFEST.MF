@@ -1,4 +1,5 @@
 Name: STATS PMML DISPLAY
+Display-Name: PMML Display
 Dialog-Specs: STATS_PMML_DISPLAY.spd
 Command-Specs: STATS_PMML_DISPLAY.xml
 Code-Files: STATS_PMML_DISPLAY.py
